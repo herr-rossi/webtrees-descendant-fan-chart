@@ -16,19 +16,6 @@
 <!-- TOC -->
 
 
-<!-- TOC -->
-* [Fan chart](#fan-chart)
-  * [Installation](#installation)
-    * [Manual installation](#manual-installation)
-      * [Configuration](#configuration)
-      * [Usage](#usage)
-    * [Using Composer](#using-composer)
-    * [Using Git](#using-git)
-  * [Development](#development)
-    * [Run tests](#run-tests)
-<!-- TOC -->
-
-
 # Fan chart
 This module provides an SVG ancestor fan chart for the [webtrees](https://www.webtrees.net) genealogy application.
 
@@ -122,6 +109,5 @@ composer update
 composer ci:test
 composer ci:test:php:phpstan
 composer ci:test:php:lint
-composer ci:test:php:unit
 composer ci:test:php:rector
 ```
