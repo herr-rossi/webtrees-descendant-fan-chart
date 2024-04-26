@@ -317,7 +317,10 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     private function getStylesheets(): array
     {
-        return [$this->assetUrl('css/fan-chart.css'), $this->assetUrl('css/svg.css')];
+        return [
+            $this->assetUrl('css/fan-chart.css'),
+            $this->assetUrl('css/svg.css'),
+        ];
     }
 
     /**
