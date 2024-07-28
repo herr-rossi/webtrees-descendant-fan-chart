@@ -5,11 +5,13 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 declare(strict_types=1);
 
-namespace MagicSunday\Webtrees\FanChart\Model;
+namespace HerrRossi\Webtrees\FanChart\Model;
 
 use Fisharebest\Webtrees\Individual;
 use JsonSerializable;

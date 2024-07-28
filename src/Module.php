@@ -5,11 +5,13 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 declare(strict_types=1);
 
-namespace MagicSunday\Webtrees\FanChart;
+namespace HerrRossi\Webtrees\FanChart;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
@@ -26,9 +28,9 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\View;
 use JsonException;
-use MagicSunday\Webtrees\FanChart\Facade\DataFacade;
-use MagicSunday\Webtrees\FanChart\Traits\ModuleChartTrait;
-use MagicSunday\Webtrees\FanChart\Traits\ModuleCustomTrait;
+use HerrRossi\Webtrees\FanChart\Facade\DataFacade;
+use HerrRossi\Webtrees\FanChart\Traits\ModuleChartTrait;
+use HerrRossi\Webtrees\FanChart\Traits\ModuleCustomTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

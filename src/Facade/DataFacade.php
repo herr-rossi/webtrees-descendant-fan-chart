@@ -5,22 +5,24 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 declare(strict_types=1);
 
-namespace MagicSunday\Webtrees\FanChart\Facade;
+namespace HerrRossi\Webtrees\FanChart\Facade;
 
 use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
-use MagicSunday\Webtrees\FanChart\Configuration;
-use MagicSunday\Webtrees\FanChart\Model\Node;
-use MagicSunday\Webtrees\FanChart\Model\NodeData;
-use MagicSunday\Webtrees\FanChart\Processor\DateProcessor;
-use MagicSunday\Webtrees\FanChart\Processor\ImageProcessor;
-use MagicSunday\Webtrees\FanChart\Processor\NameProcessor;
+use HerrRossi\Webtrees\FanChart\Configuration;
+use HerrRossi\Webtrees\FanChart\Model\Node;
+use HerrRossi\Webtrees\FanChart\Model\NodeData;
+use HerrRossi\Webtrees\FanChart\Processor\DateProcessor;
+use HerrRossi\Webtrees\FanChart\Processor\ImageProcessor;
+use HerrRossi\Webtrees\FanChart\Processor\NameProcessor;
 
 /**
  * Facade class to hide complex logic to generate the structure required to display the tree.

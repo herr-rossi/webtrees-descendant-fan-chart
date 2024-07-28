@@ -5,18 +5,20 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 declare(strict_types=1);
 
-namespace MagicSunday\Webtrees;
+namespace HerrRossi\Webtrees;
 
 use Composer\Autoload\ClassLoader;
-use MagicSunday\Webtrees\FanChart\Module;
+use HerrRossi\Webtrees\FanChart\Module;
 
 // Register our namespace
 $loader = new ClassLoader();
-$loader->addPsr4('MagicSunday\\Webtrees\\FanChart\\', __DIR__ . '/src');
+$loader->addPsr4('HerrRossi\\Webtrees\\FanChart\\', __DIR__ . '/src');
 $loader->register();
 
 // Create and return instance of the module

@@ -22,3 +22,4 @@ node_modules/
 # Custom
 resources/js/fan-chart.js
 webtrees-fan-chart.zip
+.vscode/sftp.json
