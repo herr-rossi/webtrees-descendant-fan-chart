@@ -119,7 +119,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     public function title(): string
     {
-        return I18N::translate('Descendant Fan Chart');
+        return I18N::translate('Descendant fan chart');
     }
 
     /**
@@ -225,10 +225,10 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
     private function getPageTitle(Individual $individual): string
     {
         if ($individual->canShowName()) {
-            return I18N::translate('Fan chart of %s', $individual->fullName());
+            return I18N::translate('Descendant fan chart of %s', $individual->fullName());
         }
 
-        return I18N::translate('Fan chart');
+        return I18N::translate('Descendant fan chart');
     }
 
     /**

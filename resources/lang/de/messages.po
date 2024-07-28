@@ -17,17 +17,17 @@ msgstr ""
 "X-Poedit-SearchPath-1: resources/views\n"
 
 #: src/Module.php:116 src/Module.php:220
-msgid "Fan chart"
-msgstr "Fächerdiagramm"
+msgid "Descendant fan chart"
+msgstr "Nachfahren-Fächerdiagramm"
 
 #: src/Module.php:126
-msgid "A fan chart of an individual’s ancestors."
-msgstr "Ein Fächerdiagramm der Vorfahren einer Person."
+msgid "A fan chart of an individual’s descendants."
+msgstr "Ein Fächerdiagramm der Nachfahren einer Person."
 
 #: src/Module.php:223 src/Traits/ModuleChartTrait.php:38
 #, php-format
-msgid "Fan chart of %s"
-msgstr "Fächerdiagramm von %s"
+msgid "Descendant fan chart of %s"
+msgstr "Nachfahren-Fächerdiagramm von %s"
 
 #: src/Module.php:243
 msgid "Use Ctrl + scroll to zoom in the view"

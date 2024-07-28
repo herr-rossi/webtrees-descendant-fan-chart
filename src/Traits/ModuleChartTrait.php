@@ -40,7 +40,7 @@ trait ModuleChartTrait
 
     public function chartTitle(Individual $individual): string
     {
-        return I18N::translate('Fan chart of %s', $individual->fullName());
+        return I18N::translate('Descendant fan chart of %s', $individual->fullName());
     }
 
     public function chartUrl(Individual $individual, array $parameters = []): string
