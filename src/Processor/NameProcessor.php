@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart\Processor;
+namespace HerrRossi\Webtrees\DescendantFanChart\Processor;
 
 use DOMDocument;
 use DOMXPath;

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace HerrRossi\Webtrees;
 
 use Composer\Autoload\ClassLoader;
-use HerrRossi\Webtrees\FanChart\Module;
+use HerrRossi\Webtrees\DescendantFanChart\Module;
 
 // Register our namespace
 $loader = new ClassLoader();
-$loader->addPsr4('HerrRossi\\Webtrees\\FanChart\\', __DIR__ . '/src');
+$loader->addPsr4('HerrRossi\\Webtrees\\DescendantFanChart\\', __DIR__ . '/src');
 $loader->register();
 
 // Create and return instance of the module

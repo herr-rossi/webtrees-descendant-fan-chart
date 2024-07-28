@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart\Model;
+namespace HerrRossi\Webtrees\DescendantFanChart\Model;
 
 use JsonSerializable;
 

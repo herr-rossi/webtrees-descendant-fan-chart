@@ -11,18 +11,18 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart\Facade;
+namespace HerrRossi\Webtrees\DescendantFanChart\Facade;
 
 use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
-use HerrRossi\Webtrees\FanChart\Configuration;
-use HerrRossi\Webtrees\FanChart\Model\Node;
-use HerrRossi\Webtrees\FanChart\Model\NodeData;
-use HerrRossi\Webtrees\FanChart\Processor\DateProcessor;
-use HerrRossi\Webtrees\FanChart\Processor\ImageProcessor;
-use HerrRossi\Webtrees\FanChart\Processor\NameProcessor;
+use HerrRossi\Webtrees\DescendantFanChart\Configuration;
+use HerrRossi\Webtrees\DescendantFanChart\Model\Node;
+use HerrRossi\Webtrees\DescendantFanChart\Model\NodeData;
+use HerrRossi\Webtrees\DescendantFanChart\Processor\DateProcessor;
+use HerrRossi\Webtrees\DescendantFanChart\Processor\ImageProcessor;
+use HerrRossi\Webtrees\DescendantFanChart\Processor\NameProcessor;
 
 /**
  * Facade class to hide complex logic to generate the structure required to display the tree.

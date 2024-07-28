@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart;
+namespace HerrRossi\Webtrees\DescendantFanChart;
 
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;

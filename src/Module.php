@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart;
+namespace HerrRossi\Webtrees\DescendantFanChart;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
@@ -28,9 +28,9 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\View;
 use JsonException;
-use HerrRossi\Webtrees\FanChart\Facade\DataFacade;
-use HerrRossi\Webtrees\FanChart\Traits\ModuleChartTrait;
-use HerrRossi\Webtrees\FanChart\Traits\ModuleCustomTrait;
+use HerrRossi\Webtrees\DescendantFanChart\Facade\DataFacade;
+use HerrRossi\Webtrees\DescendantFanChart\Traits\ModuleChartTrait;
+use HerrRossi\Webtrees\DescendantFanChart\Traits\ModuleCustomTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -119,7 +119,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     public function title(): string
     {
-        return I18N::translate('Fan chart');
+        return I18N::translate('Descendant Fan Chart');
     }
 
     /**
@@ -129,7 +129,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     public function description(): string
     {
-        return I18N::translate('A fan chart of an individual’s ancestors.');
+        return I18N::translate('A fan chart of an individual’s descendants.');
     }
 
     /**

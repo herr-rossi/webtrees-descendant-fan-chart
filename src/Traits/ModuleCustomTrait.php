@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace HerrRossi\Webtrees\FanChart\Traits;
+namespace HerrRossi\Webtrees\DescendantFanChart\Traits;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
