@@ -94,7 +94,8 @@ class DataFacade
     }
 
     /**
-     * Recursively build the data array of the individual ancestors.
+     * Recursively build the data array of the individual descendants.
+     * Main update for descendant tree, by herr--rossi
      *
      * @param Individual|null $individual The start person
      * @param int             $generation The current generation
@@ -112,26 +113,26 @@ class DataFacade
             $this->getNodeData($generation, $individual)
         );
 
-        /** @var Family|null $family */
-        $family = $individual->childFamilies()->first();
+        /** @var Families|null $families */
+        $families = $individual->spouseFamilies();
 
-        if ($family === null) {
+        foreach ($families as $family) {
+            foreach ($family->children() as $child) { 
+        
+                // Recursively call the method for the children of the individual
+                $childNode = $this->buildTreeStructure($child, $generation + 1);
+                
+                // Add child nodes
+                if ($childNode instanceof Node) {
+                    $node->addParent($childNode);
+                }
+            }
+        }
+
+        if ($families === null) {
             return $node;
         }
-
-        // Recursively call the method for the parents of the individual
-        $fatherNode = $this->buildTreeStructure($family->husband(), $generation + 1);
-        $motherNode = $this->buildTreeStructure($family->wife(), $generation + 1);
-
-        // Add an array of child nodes
-        if ($fatherNode instanceof Node) {
-            $node->addParent($fatherNode);
-        }
-
-        if ($motherNode instanceof Node) {
-            $node->addParent($motherNode);
-        }
-
+       
         return $node;
     }
 
