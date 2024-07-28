@@ -17,7 +17,9 @@
 
 
 # Fan chart
-This module provides an SVG ancestor fan chart for the [webtrees](https://www.webtrees.net) genealogy application.
+This module provides an SVG descendant fan chart for the [webtrees](https://www.webtrees.net) genealogy application, currently in experimental mode by Herr Rossi.
+
+It is based on the following work: https://github.com/magicsunday/webtrees-fan-chart.
 
 ![210 Degree chart with opened contextmenu](assets/fan-chart-210-contextmenu.png)
 ![210 Degree chart with color gradients and hidden empty segments](assets/fan-chart-210-gradient.png)
