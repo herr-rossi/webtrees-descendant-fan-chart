@@ -169,7 +169,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                         'tree'                    => $tree->name(),
                         'xref'                    => $validator->string('xref', ''),
                         'generations'             => $validator->integer('generations', 6),
-                        'fanDegree'               => $validator->integer('fanDegree', 210),
+                        'fanDegree'               => $validator->integer('fanDegree', 360),
                         'fontScale'               => $validator->integer('fontScale', 100),
                         'hideEmptySegments'       => $validator->boolean('hideEmptySegments', false),
                         'showColorGradients'      => $validator->boolean('showColorGradients', false),

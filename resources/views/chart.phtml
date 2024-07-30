@@ -55,6 +55,7 @@ use HerrRossi\Webtrees\FanChart\Configuration;
             </div>
         </div>
 
+<?php /* hr
         <div class="row">
             <label class="col-sm-3 col-form-label wt-page-options-label" for="fanDegree">
                 <?= I18N::translate('Fan size') ?>
@@ -64,6 +65,7 @@ use HerrRossi\Webtrees\FanChart\Configuration;
                 <output id="fanDegreeOutput" name="fanDegreeOutput" class="custom-range-value wt-page-options-label ms-3"><?= $configuration->getFanDegree() ?>°</output>
             </div>
         </div>
+hr */ ?>
 
         <div class="row">
             <label class="col-sm-3 col-form-label wt-page-options-label" for="generations">
@@ -83,6 +85,7 @@ use HerrRossi\Webtrees\FanChart\Configuration;
         </div>
 
         <div class="collapse" id="showMoreOptions">
+<?php /* hr            
             <div class="row">
                 <div class="col-form-label col-sm-3 wt-page-options-label">
                     <?= I18N::translate('Presentation') ?>
@@ -116,7 +119,7 @@ use HerrRossi\Webtrees\FanChart\Configuration;
                     ?>
                 </div>
             </div>
-
+hr */ ?>
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="innerArcs">
                     <?= I18N::translate('Number of inner levels') ?>
@@ -286,12 +289,14 @@ storage.register("fontScale");
 // Handle option toggle button
 toggleMoreOptions(storage);
 
+<?php /* hr
 // Set initial stored value
 document.getElementById("fanDegreeOutput").value = parseInt(storage.read("fanDegree")) + "°";
 
 document.getElementById("fanDegree").addEventListener("input", function (event) {
     document.getElementById('fanDegreeOutput').value = document.getElementById("fanDegree").value + "°";
 });
+hr */ ?>
 
 let data     = <?= $chartParams ?>;
 let ajaxUrl  = <?= json_encode($ajaxUrl) ?>;

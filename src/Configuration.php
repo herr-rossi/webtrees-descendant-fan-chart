@@ -45,7 +45,7 @@ class Configuration
      *
      * @var int
      */
-    private const MAX_GENERATIONS = 10;
+    private const MAX_GENERATIONS = 20;
 
     /**
      * The default number of inner levels.
@@ -73,7 +73,7 @@ class Configuration
      *
      * @var int
      */
-    private const FAN_DEGREE_DEFAULT = 210;
+    private const FAN_DEGREE_DEFAULT = 360;
 
     /**
      * The default font size scaling factor in percent.
