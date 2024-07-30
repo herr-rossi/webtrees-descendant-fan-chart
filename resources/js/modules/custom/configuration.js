@@ -61,13 +61,13 @@ export default class Configuration
         this._numberOfInnerCircles = innerArcs;
 
         // Radius of the innermost circle
-        this.centerCircleRadius = 85;
+        this.centerCircleRadius = 100;
 
         // Height of each inner circle arc
-        this.innerArcHeight = 85;
+        this.innerArcHeight = 200;
 
         // Height of each outer circle arc
-        this.outerArcHeight = 110;
+        this.outerArcHeight = 200;
 
         if (showParentMarriageDates) {
             this.innerArcHeight = this.circlePadding + 110;
