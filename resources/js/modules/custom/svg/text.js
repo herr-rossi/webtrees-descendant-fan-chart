@@ -3,6 +3,8 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 import * as d3 from "../../lib/d3";
@@ -39,8 +41,8 @@ export default class Text
      */
     createLabels(parent, datum)
     {
-        // Inner labels
-        if (this.isInnerLabel(datum)) {
+        // Labels along arc
+        if (this.isLabelAlongArc(datum)) {
             const parentId = d3.select(parent.node().parentNode).attr("id");
             const nameGroups = this.createNamesData(datum);
 
@@ -542,18 +544,19 @@ export default class Text
     }
 
     /**
-     * Returns TRUE if the depth of the element is in the inner range. So labels should
-     * be rendered along an arc path. Otherwise, returns FALSE to indicate the element
-     * is either the center one or an outer arc.
+     * Returns TRUE if the ratio of width to heigth of the element is > 1. So labels should
+     * be rendered along an arc path (in transverse direction). Otherwise returns FALSE to
+     * indicate the element label shall be either radial or that the element is the center one.
      *
      * @param {Object} data The D3 data object
      *
      * @return {Boolean}
      */
-    isInnerLabel(data)
+    isLabelAlongArc(data)
     {
-        // Note: The center element does not belong to the inner labels!
-        return ((data.depth > 0) && (data.depth <= this._configuration.numberOfInnerCircles));
+        // Note: The center element does not belong to the transverse labels!
+        // hr: oirignal code: return ((data.depth > 0) && (data.depth <= this._configuration.numberOfInnerCircles));
+        return ((data.depth > 0) && (this._geometry.arcLength(data, 50) > this._configuration.outerArcHeight));
     }
 
     /**
