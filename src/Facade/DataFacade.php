@@ -124,7 +124,7 @@ class DataFacade
                 
                 // Add child nodes
                 if ($childNode instanceof Node) {
-                    $node->addParent($childNode);
+                    $node->addChildren($childNode);
                 }
             }
         }

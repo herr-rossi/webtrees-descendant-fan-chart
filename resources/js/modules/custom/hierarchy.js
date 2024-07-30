@@ -3,6 +3,8 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
  */
 
 import * as d3 from "../lib/d3";
@@ -36,43 +38,25 @@ export default class Hierarchy
      *
      * @param {Object} datum The JSON encoded chart data
      */
+    
+    // HerrRossi: new code for descendant chart
+    
     init(datum)
     {
         // Get the greatest depth
-        // const getDepth       = ({parents}) => 1 + (parents ? Math.max(...parents.map(getDepth)) : 0);
+        // const getDepth       = ({children}) => 1 + (children ? Math.max(...children.map(getDepth)) : 0);
         // const maxGenerations = getDepth(datum);
 
         // Construct root node from the hierarchical data
+        let that = this;
         this._root = d3.hierarchy(
             datum,
             datum => {
-                // Fill up the missing parents to the requested number of generations
-                // if (!datum.data.parents && (datum.data.generation < maxGenerations)) {
-                if (!datum.parents && (datum.data.generation < this._configuration.generations)) {
-                    datum.parents = [
-                        this.createEmptyNode(datum.data.generation + 1, SEX_MALE),
-                        this.createEmptyNode(datum.data.generation + 1, SEX_FEMALE)
-                    ];
-                }
-
-                // Add missing parent record if we got only one
-                if (datum.parents && (datum.parents.length < 2)) {
-                    if (datum.parents[0].data.sex === SEX_MALE) {
-                        datum.parents.push(
-                            this.createEmptyNode(datum.data.generation + 1, SEX_FEMALE)
-                        );
-                    } else {
-                        datum.parents.unshift(
-                            this.createEmptyNode(datum.data.generation + 1, SEX_MALE)
-                        );
-                    }
-                }
-
-                return datum.parents;
+                return datum.children
             })
-            // Calculate value properties of each node in the hierarchy
-            .count();
-
+            // Calculate number of leaves
+            .sum(function(d) { return d.children ? 0 : (1 / (d.data.generation - 2 + 1 - 0))})
+        
         // Create partition layout
         let partitionLayout = d3.partition();
 

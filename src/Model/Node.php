@@ -30,11 +30,11 @@ class Node implements JsonSerializable
     protected NodeData $data;
 
     /**
-     * The list of parents.
+     * The list of children.
      *
      * @var Node[]
      */
-    protected array $parents = [];
+    protected array $children = [];
 
     /**
      * Constructor.
@@ -55,13 +55,13 @@ class Node implements JsonSerializable
     }
 
     /**
-     * @param Node $parent
+     * @param Node $children
      *
      * @return Node
      */
-    public function addParent(Node $parent): Node
+    public function addChildren(Node $children): Node
     {
-        $this->parents[] = $parent;
+        $this->children[] = $children;
 
         return $this;
     }
@@ -77,8 +77,8 @@ class Node implements JsonSerializable
             'data' => $this->data,
         ];
 
-        if ($this->parents !== []) {
-            $jsonData['parents'] = $this->parents;
+        if ($this->children !== []) {
+            $jsonData['children'] = $this->children;
         }
 
         return $jsonData;
