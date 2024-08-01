@@ -308,7 +308,7 @@ const fanChart = new WebtreesFanChart.FanChart(
     {
         labels: data.labels,
         generations: parseInt(storage.read("generations")),
-        fanDegree: parseInt(storage.read("fanDegree")),
+        fanDegree: 360, // parseInt(storage.read("fanDegree")),
         defaultColor: data.defaultColor,
         fontScale: parseInt(storage.read("fontScale")),
         hideEmptySegments: storage.read("hideEmptySegments"),

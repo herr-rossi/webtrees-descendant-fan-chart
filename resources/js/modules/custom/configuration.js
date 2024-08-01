@@ -32,7 +32,7 @@ export default class Configuration
     constructor(
         labels,
         generations = 6,
-        fanDegree = 210,
+        fanDegree = 360,
         fontScale = 100,
         hideEmptySegments = false,
         showColorGradients = false,
