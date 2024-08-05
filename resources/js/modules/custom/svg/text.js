@@ -8,7 +8,7 @@
  */
 
 import * as d3 from "../../lib/d3";
-import Geometry, {MATH_DEG2RAD, MATH_RAD2DEG} from "./geometry";
+import Geometry, { MATH_DEG2RAD, MATH_RAD2DEG } from "./geometry";
 import measureText from "../../lib/chart/text/measure"
 
 /**
@@ -18,19 +18,17 @@ import measureText from "../../lib/chart/text/measure"
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
  * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
-export default class Text
-{
+export default class Text {
     /**
      * Constructor.
      *
      * @param {Svg}           svg
      * @param {Configuration} configuration The application configuration
      */
-    constructor(svg, configuration)
-    {
-        this._svg           = svg;
+    constructor(svg, configuration) {
+        this._svg = svg;
         this._configuration = configuration;
-        this._geometry      = new Geometry(this._configuration);
+        this._geometry = new Geometry(this._configuration);
     }
 
     /**
@@ -39,194 +37,137 @@ export default class Text
      * @param {selection} parent The parent element to which the elements are to be attached
      * @param {Object}    datum  The D3 data object
      */
-    createLabels(parent, datum)
-    {
+    createLabels(parent, datum) {
+        // Define label elements
+        const nameGroups = this.createNamesData(datum);
+
+        const timeSpan = datum.data.data.timespan !== "" ? [[{
+            label: datum.data.data.timespan,
+            isPreferred: false,
+            isLastName: false,
+            isNameRtl: datum.data.data.isNameRtl,
+            isDate: true
+        }]] : [];
+
+        const birthPlace = "birthplacedummy" !== "" ? [[{
+            label: "birthplacedummy",
+            //label: datum.data.data.birthPlace,
+            isPreferred: false,
+            isLastName: false,
+            isNameRtl: datum.data.data.isNameRtl,
+            isDate: true
+            //isPlace: true
+        }]] : [];
+
+        let labelGroups = [];
+
+        // Define label groups
+
+        // Labels along arc (four lines)
+        if (this.isLabelAlongArc(datum)) {
+            labelGroups = [].concat(nameGroups, timeSpan, birthPlace);
+
+            // Radial labels
+        } else {
+
+            // Very narrow labels (one line)
+            if (this._geometry.arcLength(datum, 1) <= 30 && datum.depth > 0) {
+                const [first, ...last] = nameGroups;
+
+                // Merge the firstname and lastname groups, as we display the whole name in one line
+                const labelGroup = [].concat(
+                    first,
+                    typeof last[0] !== "undefined" ? last[0] : [],
+                    typeof timeSpan[0] !== "undefined" ? timeSpan[0] : [],
+                    typeof birthPlace[0] !== "undefined" ? birthPlace[0] : []);
+                labelGroups = [labelGroup];
+            }
+
+            // Narrow labels (two lines)
+            else if (this._geometry.arcLength(datum, 1) <= 50 && datum.depth > 0) {
+                const [first, ...last] = nameGroups;
+
+                // Merge the firstname and lastname groups, as we display the whole name in one line
+                const labelGroup1 = [].concat(first, typeof last[0] !== "undefined" ? last[0] : []);
+                const labelGroup2 = [].concat(
+                    typeof timeSpan[0] !== "undefined" ? timeSpan[0] : [],
+                    typeof birthPlace[0] !== "undefined" ? birthPlace[0] : []);
+                labelGroups = [].concat([labelGroup1], [labelGroup2]);
+            }
+
+            // Medium wide lables (three lines)
+            else if (this._geometry.arcLength(datum, 1) <= 70 && datum.depth > 0) {
+                const labelGroup2 = [].concat(
+                    typeof timeSpan[0] !== "undefined" ? timeSpan[0] : [],
+                    typeof birthPlace[0] !== "undefined" ? birthPlace[0] : []);
+                labelGroups = [].concat(nameGroups, [labelGroup2]);
+            }
+
+            // Wide lables and inner circle (four lines)
+            else if (this._geometry.arcLength(datum, 1) > 70 || datum.depth == 0) {
+                labelGroups = [].concat(nameGroups, timeSpan, birthPlace);
+            }
+        }
+
+        // Append labels
+
         // Labels along arc
         if (this.isLabelAlongArc(datum)) {
             const parentId = d3.select(parent.node().parentNode).attr("id");
-            const nameGroups = this.createNamesData(datum);
+            const numberOfLines = labelGroups.length;
 
             // The textPath element must be contained individually in a text element, otherwise the exported
             // chart will not be drawn correctly in Inkscape (actually this is not necessary, the browsers
             // display the chart correctly).
 
-            nameGroups.forEach((nameGroup, index) => {
-                const availableWidth = this.getAvailableWidth(datum, index);
-                const pathId = this.createPathDefinition(parentId, index, datum);
+            labelGroups.forEach((labelGroup, index) => {
+                const availableWidth = this.getAvailableWidth(datum, index, numberOfLines);
+                const pathId = this.createPathDefinition(parentId, index, datum, numberOfLines);
                 const textPath = parent
                     .append("text")
                     .append("textPath")
                     .attr("xlink:href", "#" + pathId)
                     .attr("startOffset", "25%");
 
-                this.addNameElements(
+                this.addLabelElements(
                     textPath,
                     this.truncateNamesData(
                         textPath,
-                        nameGroup,
+                        labelGroup,
                         availableWidth
                     )
                 );
             });
 
-            // Alternative names
-            if (datum.data.data.alternativeName !== "") {
-                const pathId = this.createPathDefinition(parentId, 2, datum);
-                const availableWidth = this.getAvailableWidth(datum, 2);
-                const nameGroup = this.createAlternativeNamesData(datum);
+            // Set optimised font size
+            this.setFontSize(parent, datum);
 
-                const textPath = parent
-                    .append("text")
-                    .append("textPath")
-                    .attr("xlink:href", "#" + pathId)
-                    .attr("startOffset", "25%")
-                    .classed("wt-chart-box-name-alt", true)
-                    .classed("rtl", datum.data.data.isAltRtl);
-
-                this.addNameElements(
-                    textPath,
-                    this.truncateNamesData(
-                        textPath,
-                        nameGroup,
-                        availableWidth
-                    )
-                );
-            }
-
-            // Birth and death date
-            if (datum.data.data.timespan !== "") {
-                const pathId = this.createPathDefinition(parentId, 3, datum);
-                const textPath = parent
-                    .append("text")
-                    .append("textPath")
-                    .attr("xlink:href", "#" + pathId)
-                    .attr("startOffset", "25%")
-                    .attr("class", "date");
-
-                textPath.append("title")
-                    .text(datum.data.data.timespan);
-
-                // Create a <tspan> element for the time span
-                const tspan = textPath.append("tspan")
-                    .text(datum.data.data.timespan);
-
-                const availableWidth = this.getAvailableWidth(datum, 3);
-
-                if (this.getTextLength(textPath) > availableWidth) {
-                    textPath.selectAll("tspan")
-                        .each(this.truncateDate(textPath, availableWidth));
-
-                    tspan.text(tspan.text() + "\u2026");
-                }
-            }
-
-        // Outer labels
+            // Radial labels
         } else {
-            // The outermost circles show the complete name and do
-            // not distinguish between first name, last name and dates
-            if (datum.depth >= 7) {
-                const [first, ...last] = this.createNamesData(datum);
-                const availableWidth = this.getAvailableWidth(datum, 0);
 
-                // Merge the firstname and lastname groups, as we display the whole name in one line
-                const combined = [].concat(first, typeof last[0] !== "undefined" ? last[0] : []);
-
-                let text1 = parent
-                    .append("text")
-                    .attr("dy", "2px");
-
-                this.addNameElements(
-                    text1,
-                    this.truncateNamesData(
-                        text1,
-                        combined,
-                        availableWidth
-                    )
+            labelGroups.forEach((labelGroup, index) => {
+                const availableWidth = this.getAvailableWidth(datum, index, 1);
+                const text = parent
+                    .append("text");
+                this.addLabelElements(
+                    text,
+                    //      this.truncateNamesData(
+                    //          text,
+                    labelGroup //,
+                    //      availableWidth
+                    //      )
                 );
-            } else {
-                const nameGroups = this.createNamesData(datum);
+            });
 
-                nameGroups.forEach((nameGroup, index) => {
-                    const availableWidth = this.getAvailableWidth(datum, index);
-                    const text = parent
-                        .append("text")
-                        .attr("dy", "2px");
+            // Set optimised font size
+            let labelFontSize = this.setFontSize(parent, datum);
 
-                    this.addNameElements(
-                        text,
-                        this.truncateNamesData(
-                            text,
-                            nameGroup,
-                            availableWidth
-                        )
-                    );
-                });
-
-                // Alternative name
-                if (datum.data.data.alternativeName !== "") {
-                    const availableWidth = this.getAvailableWidth(datum, 2);
-                    const nameGroup = this.createAlternativeNamesData(datum);
-
-                    const text = parent
-                        .append("text")
-                        .attr("dy", "5px")
-                        .classed("wt-chart-box-name-alt", true)
-                        .classed("rtl", datum.data.data.isAltRtl);
-
-                    this.addNameElements(
-                        text,
-                        this.truncateNamesData(
-                            text,
-                            nameGroup,
-                            availableWidth
-                        )
-                    );
-                }
-
-                // Birth and death date
-                if (datum.depth < 6) {
-                    // Birth and death date
-                    if (datum.data.data.timespan !== "") {
-                        const text = parent
-                            .append("text")
-                            .attr("class", "date")
-                            .attr("dy", "7px");
-
-                        text.append("title")
-                            .text(datum.data.data.timespan);
-
-                        // Create a <tspan> element for the time span
-                        const tspan = text.append("tspan")
-                            .text(datum.data.data.timespan);
-
-                        const availableWidth = this.getAvailableWidth(datum, 2);
-
-                        if (this.getTextLength(text) > availableWidth) {
-                            text.selectAll("tspan")
-                                .each(this.truncateDate(text, availableWidth));
-
-                            tspan.text(tspan.text() + "\u2026");
-                        }
-                    }
-                }
-            }
+            // Set correct offset according to the font size
+            parent.selectAll("text")
+                .attr("dy", (labelFontSize / 3) + "px");
 
             // Rotate outer labels in the right position
-            this.transformOuterText(parent, datum);
-        }
-
-        // Marriage date
-        if (this._configuration.showParentMarriageDates && datum.children && (datum.depth < 5)) {
-            const parentId = d3.select(parent.node().parentNode).attr("id");
-            const pathId = this.createPathDefinition(parentId, 4, datum);
-            const textPath = parent
-                .append("text")
-                .append("textPath")
-                .attr("xlink:href", "#" + pathId)
-                .attr("startOffset", "25%")
-                .attr("class", "date");
-
-            this.addMarriageDate(textPath, datum);
+            this.transformText(parent, datum, labelFontSize);
         }
     }
 
@@ -239,8 +180,7 @@ export default class Text
      *
      * @private
      */
-    createNamesData(datum)
-    {
+    createNamesData(datum) {
         /** @var {LabelElementData[][]} names */
         let names = {};
         /** @var {LabelElementData[]} firstnames */
@@ -277,7 +217,7 @@ export default class Text
             }
         }
 
-        names[minPosFirstnames] = [...firstnameMap].map(([, value]) => ( value ));
+        names[minPosFirstnames] = [...firstnameMap].map(([, value]) => (value));
 
         let lastnameOffset = 0;
         let lastnameMap = new Map();
@@ -313,7 +253,7 @@ export default class Text
             }
         }
 
-        names[minPosLastnames] = [...lastnameMap].map(([, value]) => ( value ));
+        names[minPosLastnames] = [...lastnameMap].map(([, value]) => (value));
 
         // Extract the values (keys don't matter anymore)
         return Object.values(names);
@@ -328,8 +268,7 @@ export default class Text
      *
      * @private
      */
-    createAlternativeNamesData(datum)
-    {
+    createAlternativeNamesData(datum) {
         let words = datum.data.data.alternativeName.split(/\s+/);
 
         /** @var {LabelElementData[]} names */
@@ -360,8 +299,7 @@ export default class Text
      *
      * @private
      */
-    addNameElements(parent, data)
-    {
+    addLabelElements(parent, data) {
         parent.selectAll("tspan")
             .data(data)
             .enter()
@@ -374,7 +312,9 @@ export default class Text
                     })
                     // Highlight the preferred and last name
                     .classed("preferred", datum => datum.isPreferred)
-                    .classed("lastName", datum => datum.isLastName);
+                    .classed("lastName", datum => datum.isLastName)
+                    .classed("date", datum => datum.isDate)
+                    .classed("place", datum => datum.isPlace);
             });
     }
 
@@ -389,9 +329,8 @@ export default class Text
      *
      * @private
      */
-    truncateNamesData(parent, names, availableWidth)
-    {
-        const fontSize   = parent.style("font-size");
+    truncateNamesData(parent, names, availableWidth) {
+        const fontSize = parent.style("font-size");
         const fontWeight = parent.style("font-weight");
 
         return this.truncateNames(names, fontSize, fontWeight, availableWidth);
@@ -403,8 +342,7 @@ export default class Text
      * @param {selection} parent The parent (<text> or <textPath>) element to which the <tspan> elements are to be attached
      * @param {Object}    datum  The D3 data object containing the individual data
      */
-    addMarriageDate(parent, datum)
-    {
+    addMarriageDate(parent, datum) {
         // Create a <tspan> element for the parent marriage date
         if (datum.data.data.marriageDateOfParents) {
             parent.append("tspan")
@@ -424,8 +362,7 @@ export default class Text
      *
      * @private
      */
-    truncateNames(names, fontSize, fontWeight, availableWidth)
-    {
+    truncateNames(names, fontSize, fontWeight, availableWidth) {
         let text = names.map(item => item.label).join(" ");
 
         return names
@@ -439,7 +376,7 @@ export default class Text
                     if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
                         // Keep only the first letter
                         name.label = name.label.slice(0, 1) + ".";
-                        text       = names.map(item => item.label).join(" ");
+                        text = names.map(item => item.label).join(" ");
                     }
                 }
 
@@ -451,7 +388,7 @@ export default class Text
                     if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
                         // Keep only the first letter
                         name.label = name.label.slice(0, 1) + ".";
-                        text       = names.map(item => item.label).join(" ");
+                        text = names.map(item => item.label).join(" ");
                     }
                 }
 
@@ -463,7 +400,7 @@ export default class Text
                     if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
                         // Keep only the first letter
                         name.label = name.label.slice(0, 1) + ".";
-                        text       = names.map(item => item.label).join(" ");
+                        text = names.map(item => item.label).join(" ");
                     }
                 }
 
@@ -484,8 +421,7 @@ export default class Text
      *
      * @private
      */
-    measureText(text, fontSize, fontWeight = 400)
-    {
+    measureText(text, fontSize, fontWeight = 400) {
         const fontFamily = this._svg.get().style("font-family");
 
         return measureText(text, fontFamily, fontSize, fontWeight);
@@ -497,14 +433,13 @@ export default class Text
      * @param {selection} parent         The parent (<text> or <textPath>) element containing the <tspan> child elements
      * @param {Number}    availableWidth The total available width the text could take
      */
-    truncateDate(parent, availableWidth)
-    {
+    truncateDate(parent, availableWidth) {
         let that = this;
 
         return function () {
             let textLength = that.getTextLength(parent);
-            let tspan      = d3.select(this);
-            let text       = tspan.text();
+            let tspan = d3.select(this);
+            let text = tspan.text();
 
             // Repeat removing the last char until the width matches
             while ((textLength > availableWidth) && (text.length > 1)) {
@@ -531,8 +466,7 @@ export default class Text
      *
      * @returns {Number}
      */
-    getTextLength(parent)
-    {
+    getTextLength(parent) {
         let totalWidth = 0;
 
         // Calculate the total used width of all <tspan> elements
@@ -552,8 +486,7 @@ export default class Text
      *
      * @return {Boolean}
      */
-    isLabelAlongArc(data)
-    {
+    isLabelAlongArc(data) {
         // Note: The center element does not belong to the transverse labels!
         // hr: oirignal code: return ((data.depth > 0) && (data.depth <= this._configuration.numberOfInnerCircles));
         return ((data.depth > 0) && (this._geometry.arcLength(data, 50) > this._configuration.outerArcHeight));
@@ -568,8 +501,7 @@ export default class Text
      *
      * @return {String} The id of the newly created path element
      */
-    createPathDefinition(parentId, index, data)
-    {
+    createPathDefinition(parentId, index, data, numberOfLines) {
         let pathId = "path-" + parentId + "-" + index;
 
         // If definition already exists, return the existing path ID
@@ -578,14 +510,14 @@ export default class Text
         }
 
         let positionFlipped = this.isPositionFlipped(data.depth, data.x0, data.x1);
-        let startAngle      = this._geometry.startAngle(data.depth, data.x0);
-        let endAngle        = this._geometry.endAngle(data.depth, data.x1);
-        let relativeRadius  = this._geometry.relativeRadius(data.depth, this.getTextOffset(positionFlipped, index));
+        let startAngle = this._geometry.startAngle(data.depth, data.x0);
+        let endAngle = this._geometry.endAngle(data.depth, data.x1);
+        let relativeRadius = this._geometry.relativeRadius(data.depth, this.getTextOffset(positionFlipped, index, numberOfLines));
 
         // Special treatment for center marriage date position
         if (this._configuration.showParentMarriageDates && (index === 4) && (data.depth < 1)) {
             startAngle = this._geometry.calcAngle(data.x0);
-            endAngle   = this._geometry.calcAngle(data.x1);
+            endAngle = this._geometry.calcAngle(data.x1);
         }
 
         // Create an arc generator for path segments
@@ -619,18 +551,18 @@ export default class Text
      *
      * @return {Boolean}
      */
-    isPositionFlipped(depth, x0, x1)
-    {
-        if ((this._configuration.fanDegree !== 360) || (depth <= 1)) {
+    isPositionFlipped(depth, x0, x1) {
+        if ((this._configuration.fanDegree !== 360) || (depth == 0)) {
             return false;
         }
 
         const startAngle = this._geometry.startAngle(depth, x0);
-        const endAngle   = this._geometry.endAngle(depth, x1);
+        const endAngle = this._geometry.endAngle(depth, x1);
+        const midAngle = (startAngle + endAngle) / 2;
 
         // Flip names for better readability depending on position in chart
-        return ((startAngle >= (90 * MATH_DEG2RAD)) && (endAngle <= (180 * MATH_DEG2RAD)))
-            || ((startAngle >= (-180 * MATH_DEG2RAD)) && (endAngle <= (-90 * MATH_DEG2RAD)));
+        return ((midAngle >= (90 * MATH_DEG2RAD)) && (midAngle <= (180 * MATH_DEG2RAD)))
+            || ((midAngle >= (-180 * MATH_DEG2RAD)) && (midAngle <= (-90 * MATH_DEG2RAD)));
     }
 
     /**
@@ -642,12 +574,11 @@ export default class Text
      *
      * @return {Number}
      */
-    getTextOffset(positionFlipped, index)
-    {
+    getTextOffset(positionFlipped, index, numberOfLines) {
         // First names, Last name, Alternative name, Date, Parent marriage date
         return positionFlipped
-            ? [23, 40, 62, 84, 125][index]
-            : [73, 56, 34, 12, 120][index];
+            ? 100 / (numberOfLines + 1) * (index + 1) + 5
+            : 100 - (100 / (numberOfLines + 1) * (index + 1)) - 5;
     }
 
     /**
@@ -661,8 +592,7 @@ export default class Text
      *
      * @private
      */
-    getAvailableWidth(data, index)
-    {
+    getAvailableWidth(data, index, numberOfLines) {
         // Outer arcs
         if (data.depth > this._configuration.numberOfInnerCircles) {
             return this._configuration.outerArcHeight
@@ -677,11 +607,10 @@ export default class Text
             let positionFlipped = this.isPositionFlipped(data.depth, data.x0, data.x1);
 
             // Calculate length of the arc
-            availableWidth = this._geometry.arcLength(data, this.getTextOffset(positionFlipped, index));
+            availableWidth = this._geometry.arcLength(data, this.getTextOffset(positionFlipped, index, numberOfLines));
         }
 
-        return availableWidth - (this._configuration.textPadding * 2)
-            - (this._configuration.padDistance / 2);
+        return availableWidth - (this._configuration.textPadding * 2) - (this._configuration.padDistance / 2);
     }
 
     /**
@@ -693,7 +622,43 @@ export default class Text
      *
      * @public
      */
-    transformOuterText(parent, datum)
+    transformText(parent, data, labelFontSize) {
+        let that = this;
+        let textElements = parent.selectAll("text");
+        let mapIndexToOffset = this.mapIndexToOffset(parent, data, labelFontSize);
+
+        textElements.each(function (ignore, i) {
+            const offsetRotate = mapIndexToOffset(i);
+
+            // Name of center person should not be rotated in any way
+            if (data.depth === 0) {
+                d3.select(this).attr("transform", "translate(0 " + (labelFontSize * offsetRotate) + ")");
+            }
+
+            // Radial labels
+            else {
+                d3.select(this).attr("transform", function () {
+                    let dx = data.x1 - data.x0;
+                    let angle = that._geometry.scale(data.x0 + (dx / 2)) * MATH_RAD2DEG;
+                    let rotate = angle - (offsetRotate * (angle > 0 ? -1 : 1));
+                    let translate = (that._geometry.centerRadius(data.depth) - (that._configuration.colorArcWidth / 2.0));
+
+                    if (angle > 0) {
+                        rotate -= 90;
+                    } else {
+                        translate = -translate;
+                        rotate += 90;
+                    }
+
+                    return "rotate(" + rotate + ") translate(" + translate + ")";
+                });
+            }
+        });
+    }
+
+
+    /** old code        
+    transformOuterText(parent, datum, labelFontSize)
     {
         let that = this;
         let textElements = parent.selectAll("text");
@@ -740,5 +705,136 @@ export default class Text
                 });
             }
         });
+    }
+*/
+
+    // Calculates the text offsets
+    mapIndexToOffset(parent, data, labelFontSize) {
+        let that = this;
+        let textElements = parent.selectAll("text");
+        let countElements = textElements.size();
+        let offsetRadius = (data.depth - 0.5) * that._configuration.innerArcHeight + that._configuration.centerCircleRadius;
+        let offset = labelFontSize * 1.6 / offsetRadius * MATH_RAD2DEG;
+
+        // Special offset for inner circle
+        if (data.depth === 0) {
+            offset = 1.7;
+        }
+
+        // Array of offsets for all text lines
+        let mapIndexToOffset = d3.scaleLinear()
+            .domain([0, countElements - 1])
+            .range([(-offset * (countElements - 1) / 2), (offset * (countElements - 1) / 2)]);
+
+        return mapIndexToOffset;
+    }
+
+    // Sets the optimal font size
+    setFontSize(parent, data) {
+        let labelFontSize = this.getMinFontSize();
+        let availableWidth = 0; //this.getAvailableWidth(data, 2);
+        let availableHeight = 0;
+
+        // Special case inner circle
+        if (data.depth == 0) {
+
+            while (this.isTextWithinCircle(parent, data, labelFontSize) == true) {
+                labelFontSize += 1;
+                parent.style("font-size", labelFontSize + "px");
+            }
+
+            while (this.isTextWithinCircle(parent, data, labelFontSize) == false) {
+                labelFontSize -= 1;
+                parent.style("font-size", labelFontSize + "px");
+            }
+
+            return (labelFontSize);
+        }
+
+        // Radial labels
+        if (!this.isLabelAlongArc(data)) {
+            availableWidth = this._configuration.outerArcHeight - this._configuration.textPadding * 2;
+            availableHeight = this._geometry.arcLength(data, 50);
+        }
+
+        // Labels along arc
+        else {
+            availableWidth = this._geometry.arcLength(data, 20) - this._configuration.textPadding * 2;
+            availableHeight = this._configuration.outerArcHeight;
+        }
+
+        parent.style("font-size", labelFontSize + "px");
+
+        let maxLabelLength = this.getMaxLabelLength(parent, data);
+        let maxTextHeight = this.getMaxLabelHight(parent, labelFontSize);
+
+        // Increase font size until max size reached
+        while (maxLabelLength < availableWidth && maxTextHeight < availableHeight) {
+            labelFontSize += 1;
+            parent.style("font-size", labelFontSize + "px");
+            maxLabelLength = this.getMaxLabelLength(parent, data);
+            maxTextHeight = this.getMaxLabelHight(parent, labelFontSize);
+        }
+
+        while (maxLabelLength >= availableWidth || maxTextHeight >= availableHeight) {
+            labelFontSize -= 1;
+            parent.style("font-size", labelFontSize + "px");
+            maxLabelLength = this.getMaxLabelLength(parent, data);
+            maxTextHeight = this.getMaxLabelHight(parent, labelFontSize);
+        }
+
+        return (labelFontSize);
+    }
+
+    // Gets minimum font size
+    getMinFontSize() {
+        return (5 * this._configuration.fontScale / 100.0);
+        //return (this._configuration.minFontSize * this._configuration.fontScale / 100.0);
+    }
+
+    // Checks if text fits in inner circle or not
+    isTextWithinCircle(parent, data, labelFontSize) {
+        let that = this;
+        let textElements = parent.selectAll("text");
+
+        let mapIndexToOffset = this.mapIndexToOffset(parent, data, labelFontSize);
+        let isTextWithinCircle = true;
+        let textOffset = 0;
+        let textLength = 0;
+        let squareText = 0;
+        let squareRadius = 0;
+
+        textElements.each(function (ignore, i) {
+            textOffset = (Math.abs(mapIndexToOffset(i)) + 0.5) * labelFontSize;
+            textLength = that.getTextLength(d3.select(this));
+            squareText = textOffset ** 2 + (textLength / 2) ** 2;
+            squareRadius = (that._configuration.centerCircleRadius - that._configuration.textPadding) ** 2;
+            if (squareText > squareRadius) {
+                isTextWithinCircle = false;
+            }
+        });
+
+        return isTextWithinCircle;
+    }
+
+    // Calculates maximum text length of all text lines of a label
+    getMaxLabelLength(parent, data) {
+        let that = this;
+        let maxLabelLength = 0;
+        parent.selectAll("text")
+            .each(function () {
+                maxLabelLength = Math.max(maxLabelLength, that.getTextLength(d3.select(this)));
+            });
+
+        return maxLabelLength;
+    }
+
+    // Calculates maximum overall text higth of all text lines of a label
+    getMaxLabelHight(parent, labelFontSize) {
+        let maxLabelHight = 0;
+        let numberOfTextStrings = parent.selectAll("text").size();
+        maxLabelHight = numberOfTextStrings * 1.7 * labelFontSize;
+
+        return maxLabelHight;
     }
 }
