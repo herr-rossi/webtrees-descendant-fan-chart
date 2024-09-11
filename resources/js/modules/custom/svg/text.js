@@ -239,38 +239,6 @@ export default class Text {
     }
 
     /**
-     * Creates the data array for the alternative name.
-     *
-     * @param {NameElementData} datum
-     *
-     * @return {LabelElementData[]}
-     *
-     * @private
-     */
-    /** code not used  
-    createAlternativeNamesData(datum) {
-        let words = datum.data.data.alternativeName.split(/\s+/);
-
-        // @var {LabelElementData[]} names
-        let names = [];
-
-        // Append the alternative names
-        names = names.concat(
-            words.map((word) => {
-                return {
-                    label: word,
-                    isPreferred: false,
-                    isLastName: false,
-                    isNameRtl: datum.data.data.isAltRtl
-                }
-            })
-        );
-
-        return names;
-    }
-    */
-
-    /**
      * Creates a single <tspan> element for each single name and append it to the
      * parent element. The "tspan" element containing the preferred name gets an
      * additional underline style to highlight this one.
@@ -300,100 +268,6 @@ export default class Text {
     }
 
     /**
-     * Creates the data array for the names.
-     *
-     * @param {Object}             parent
-     * @param {LabelElementData[]} names
-     * @param {Number}             availableWidth
-     *
-     * @return {LabelElementData[]}
-     *
-     * @private
-     */
-    /*    truncateNamesData(parent, names, availableWidth) {
-            const fontSize = parent.style("font-size");
-            const fontWeight = parent.style("font-weight");
-    
-            return this.truncateNames(names, fontSize, fontWeight, availableWidth);
-        }
-    */
-    /**
-     * Creates a single <tspan> element for the marriage date and append it to the parent element.
-     *
-     * @param {selection} parent The parent (<text> or <textPath>) element to which the <tspan> elements are to be attached
-     * @param {Object}    datum  The D3 data object containing the individual data
-     */
-    /** code not used  
-    addMarriageDate(parent, datum) {
-        // Create a <tspan> element for the parent marriage date
-        if (datum.data.data.marriageDateOfParents) {
-            parent.append("tspan")
-                .text("\u26AD " + datum.data.data.marriageDateOfParents);
-        }
-    }
-    */
-
-    /**
-     * Truncates the list of names.
-     *
-     * @param {LabelElementData[]} names          The names array
-     * @param {String}             fontSize       The font size
-     * @param {Number}             fontWeight     The font weight
-     * @param {Number}             availableWidth The available width
-     *
-     * @return {LabelElementData[]}
-     *
-     * @private
-     */
-    /*    truncateNames(names, fontSize, fontWeight, availableWidth) {
-            let text = names.map(item => item.label).join(" ");
-    
-            return names
-                // Start truncating from the last element to the first one
-                .reverse()
-                .map((name) => {
-                    // Select all not preferred and not last names
-                    if ((name.isPreferred === false)
-                        && (name.isLastName === false)
-                    ) {
-                        if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
-                            // Keep only the first letter
-                            name.label = name.label.slice(0, 1) + ".";
-                            text = names.map(item => item.label).join(" ");
-                        }
-                    }
-    
-                    return name;
-                })
-                .map((name) => {
-                    // Afterward, the preferred ones, if text takes still too much space
-                    if (name.isPreferred === true) {
-                        if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
-                            // Keep only the first letter
-                            name.label = name.label.slice(0, 1) + ".";
-                            text = names.map(item => item.label).join(" ");
-                        }
-                    }
-    
-                    return name;
-                })
-                .map((name) => {
-                    // Finally truncate lastnames
-                    if (name.isLastName === true) {
-                        if (this.measureText(text, fontSize, fontWeight) > availableWidth) {
-                            // Keep only the first letter
-                            name.label = name.label.slice(0, 1) + ".";
-                            text = names.map(item => item.label).join(" ");
-                        }
-                    }
-    
-                    return name;
-                })
-                // Revert reversed order again
-                .reverse();
-        }
-    */
-    /**
      * Measures the given text and return its width depending on the used font (including size and weight).
      *
      * @param {String} text
@@ -411,38 +285,6 @@ export default class Text {
     }
 
     /**
-     * Truncates a date value.
-     *
-     * @param {selection} parent         The parent (<text> or <textPath>) element containing the <tspan> child elements
-     * @param {Number}    availableWidth The total available width the text could take
-     */
-    /*    truncateDate(parent, availableWidth) {
-            let that = this;
-    
-            return function () {
-                let textLength = that.getTextLength(parent);
-                let tspan = d3.select(this);
-                let text = tspan.text();
-    
-                // Repeat removing the last char until the width matches
-                while ((textLength > availableWidth) && (text.length > 1)) {
-                    // Remove last char
-                    text = text.slice(0, -1).trim();
-    
-                    tspan.text(text);
-    
-                    // Recalculate text length
-                    textLength = that.getTextLength(parent);
-                }
-    
-                // Remove trailing dot if present
-                if (text[text.length - 1] === ".") {
-                    tspan.text(text.slice(0, -1).trim());
-                }
-            };
-        }
-    */
-    /**
      * Returns a float representing the computed length of all <tspan> elements within the element.
      *
      * @param {selection} parent The parent (<text> or <textPath>) element containing the <tspan> child elements
@@ -450,22 +292,6 @@ export default class Text {
      * @returns {Number}
      */
     getTextLength(parent) {
-        //let totalWidth = 0;
-        //let totalWidth2 = 0;
-        // Calculate the total used width of all <tspan> elements
-        //parent.selectAll("tspan").each(function (ignore, i) {
-        //    totalWidth += this.getComputedTextLength();
-        //if (i > 0) {
-        //  totalWidth += 0.25 * 10;
-        //}
-        //});
-
-        //console.log("total width tspan: " + totalWidth);
-
-        //parent.each(function () {
-        //  totalWidth2 += this.getComputedTextLength();
-        //});
-        //    totalWidth2 += parent.node().getComputedTextLength();
         const fontSize = parent.style("font-size");
         const fontWeight = parent.style("font-weight");
         let text = parent.text();
@@ -513,13 +339,7 @@ export default class Text {
         let startAngle = this._geometry.startAngle(data.depth, data.x0);
         let endAngle = this._geometry.endAngle(data.depth, data.x1);
         let relativeRadius = this._geometry.relativeRadius(data.depth, this.getTextOffset(positionFlipped, index, numberOfLines));
-        /*
-                // Special treatment for center marriage date position
-                if (this._configuration.showParentMarriageDates && (index === 4) && (data.depth < 1)) {
-                    startAngle = this._geometry.calcAngle(data.x0);
-                    endAngle = this._geometry.calcAngle(data.x1);
-                }
-        */
+
         // Create an arc generator for path segments
         let arcGenerator = d3.arc()
             .startAngle(positionFlipped ? endAngle : startAngle)
@@ -740,17 +560,6 @@ export default class Text {
 
         // Special case inner circle
         if (data.depth == 0) {
-            /*
-                        while (this.isTextWithinCircle(parent, data, labelFontSize) == true) {
-                            labelFontSize += 1;
-                            parent.style("font-size", labelFontSize + "px");
-                        }
-            
-                        while (this.isTextWithinCircle(parent, data, labelFontSize) == false) {
-                            labelFontSize -= 1;
-                            parent.style("font-size", labelFontSize + "px");
-                        }
-            */
 
             let indexOfSizingLine = this.getIndexOfSizingLine(parent, data, numberOfLines, labelFontSize);
             let mapIndexToOffset = this.mapIndexToOffset(parent, data, labelFontSize);
@@ -784,84 +593,12 @@ export default class Text {
         labelFontSize = labelFontSize / max;
         parent.style("font-size", labelFontSize + "px");
 
-        /*
-                // Increase font size until max size reached
-                while (sizingLabelLineLength < availableWidth && maxTextHeight < availableHeight) {
-                    labelFontSize += 1;
-                    parent.style("font-size", labelFontSize + "px");
-                    //availableWidth = this.getAvailableWidth(data, 0, numberOfLines);
-                    
-                    sizingLabelLineLength = this.getTextLength(parent.selectAll("text").filter((d, i) => i == indexOfSizingLine));
-                    maxTextHeight = this.getMaxLabelHight(parent, labelFontSize);
-                }
-        
-                while (sizingLabelLineLength >= availableWidth || maxTextHeight >= availableHeight) {
-                    labelFontSize -= 1;
-                    parent.style("font-size", labelFontSize + "px");
-                    //availableWidth = this.getAvailableWidth(data, 0, numberOfLines);
-        
-                    sizingLabelLineLength = this.getTextLength(parent.selectAll("text").filter((d, i) => i == indexOfSizingLine));
-                    maxTextHeight = this.getMaxLabelHight(parent, labelFontSize);
-                    console.log("index: " + indexOfSizingLine);
-                    console.log("available Width: " + availableWidth);
-                    console.log("Label length: " + sizingLabelLineLength);
-                }
-        */
         return (labelFontSize);
     }
-    /*
-        // Gets minimum font size
-        getMinFontSize() {
-            return (5 * this._configuration.fontScale / 100.0);
-            //return (this._configuration.minFontSize * this._configuration.fontScale / 100.0);
-        }
-    */
-    // Checks if text fits in inner circle or not
-    /*    isTextWithinCircle(parent, data, labelFontSize) {
-            let that = this;
-            let textElements = parent.selectAll("text");
-            //test mode
-    
-    
-            //test mode
-            let mapIndexToOffset = this.mapIndexToOffset(parent, data, labelFontSize);
-            let isTextWithinCircle = true;
-            let textOffset = 0;
-            let textLength = 0;
-            let squareText = 0;
-            let squareRadius = 0;
-    
-            textElements.each(function (ignore, i) {
-                textOffset = (Math.abs(mapIndexToOffset(i)) + 0.5) * labelFontSize;
-                textLength = that.getTextLength(d3.select(this));
-                squareText = textOffset ** 2 + (textLength / 2) ** 2;
-                squareRadius = (that._configuration.centerCircleRadius - that._configuration.colorArcWidth - 0.5 * labelFontSize) ** 2;
-                if (squareText > squareRadius) {
-                    isTextWithinCircle = false;
-                }
-            });
-    
-            return isTextWithinCircle;
-        }
-    */
-    
-    /*
-         // Calculates maximum text length of all text lines of a label
-         getMaxLabelLength(parent, data) {
-             let that = this;
-             let maxLabelLength = 0;
-             parent.selectAll("text")
-                 .each(function () {
-                     maxLabelLength = Math.max(maxLabelLength, that.getTextLength(d3.select(this)));
-                 });
-     
-             return maxLabelLength;
-         }
-    */
 
     // Calculates maximum overall text higth of all text lines of a label
     getMaxLabelHight(parent, labelFontSize, numberOfLines) {
-  
+
         return numberOfLines * 1.7 * labelFontSize;
     }
 }
