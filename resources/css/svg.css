@@ -45,7 +45,7 @@
 }
 
 .webtrees-fan-chart-container svg g.person.depth-0 .date {
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .webtrees-fan-chart-container svg .wt-chart-box-name {
