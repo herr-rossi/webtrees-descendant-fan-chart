@@ -13,7 +13,7 @@
 }
 
 .webtrees-fan-chart-container svg g.person g.color path.unknown {
-    fill: var(--sex-u-bg, rgb(255, 255, 255));
+    fill: rgb(244, 247, 238);
 }
 
 .webtrees-fan-chart-container svg g.person g.arc path {
