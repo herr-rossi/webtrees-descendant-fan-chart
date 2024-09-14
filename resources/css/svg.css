@@ -44,6 +44,13 @@
     unicode-bidi: plaintext;
 }
 
+.webtrees-fan-chart-container svg g.name .place {
+    fill: rgb(105, 105, 105);
+    font-weight: normal;
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+
 .webtrees-fan-chart-container svg g.person.depth-0 .date {
     /* font-size: 14px; */
 }

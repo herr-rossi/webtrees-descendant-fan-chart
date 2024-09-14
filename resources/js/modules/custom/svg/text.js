@@ -50,13 +50,12 @@ export default class Text {
         }]] : [];
 
         const birthPlace = datum.data.data.birthPlace !== "" ? [[{
-            //label: "x",
             label: "*" + datum.data.data.birthPlace,
             isPreferred: false,
             isLastName: false,
             isNameRtl: datum.data.data.isNameRtl,
-            isDate: true
-            //isPlace: true
+            //isDate: true
+            isPlace: true
         }]] : [];
 
         // Define label lines content
