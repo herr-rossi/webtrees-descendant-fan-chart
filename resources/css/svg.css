@@ -38,7 +38,7 @@
 }
 
 .webtrees-fan-chart-container svg g.name .date {
-    fill: rgb(50, 50, 50);
+    fill: rgb(105, 105, 105);
     font-weight: normal;
     direction: ltr;
     unicode-bidi: plaintext;

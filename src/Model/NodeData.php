@@ -361,6 +361,19 @@ class NodeData implements JsonSerializable
         return $this;
     }
 
+    // added by hr
+    /**
+     * @param string $birthPlace
+     *
+     * @return NodeData
+     */
+    public function setBirthPlace(string $birthPlace): NodeData
+    {
+        $this->birthPlace = $birthPlace;
+
+        return $this;
+    }
+
     /**
      * @param string $death
      *
@@ -452,6 +465,7 @@ class NodeData implements JsonSerializable
             'thumbnail'             => $this->thumbnail,
             'sex'                   => $this->sex,
             'birth'                 => $this->birth,
+            'birthPlace'            => $this->birthPlace, // added by hr
             'death'                 => $this->death,
             'marriageDate'          => $this->marriageDate,
             'marriageDateOfParents' => $this->marriageDateOfParents,

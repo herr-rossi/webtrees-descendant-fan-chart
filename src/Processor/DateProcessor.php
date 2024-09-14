@@ -104,6 +104,19 @@ class DateProcessor
         );
     }
 
+    // added by hr
+    /**
+     * Returns the formatted birthplace without HTML tags.
+     *
+     * @return string
+     */
+    public function getBirthPlace(): string
+    {
+        return $this->decodeValue(
+            $this->individual->getBirthPlace()->placeName()
+        );
+    }
+
     /**
      * Returns the formatted death date without HTML tags.
      *
