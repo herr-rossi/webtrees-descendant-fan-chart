@@ -128,15 +128,15 @@ class DateProcessor
         }
 
         if ($this->birthDate->isOK()) {
-            return I18N::translate('Born: %s', (string) $this->getBirthYear());
+            return I18N::translate('*%s', (string) $this->getBirthYear());
         }
 
         if ($this->deathDate->isOK()) {
-            return I18N::translate('Died: %s', (string) $this->getDeathYear());
+            return I18N::translate('†%s', (string) $this->getDeathYear());
         }
 
         if ($this->individual->isDead()) {
-            return I18N::translate('Deceased');
+            return I18N::translate('†');
         }
 
         return '';
