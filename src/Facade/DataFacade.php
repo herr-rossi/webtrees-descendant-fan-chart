@@ -175,8 +175,9 @@ class DataFacade
             ->setThumbnail($imageProcessor->getHighlightImageUrl(100, 100, false))
             ->setSex($individual->sex())
             ->setBirth($dateProcessor->getBirthDate())
-            ->setBirthPlace($dateProcessor->getBirthPlace()) // added by hr
             ->setDeath($dateProcessor->getDeathDate())
+            ->setBirthPlace($dateProcessor->getBirthPlace()) // added by hr
+            ->setBirthPlaceDescription($dateProcessor->getBirthPlaceDescription()) // added by hr
             ->setMarriageDate($dateProcessor->getMarriageDate())
             ->setMarriageDateOfParents($dateProcessor->getMarriageDateOfParents())
             ->setTimespan($dateProcessor->getLifetimeDescription())

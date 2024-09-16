@@ -49,8 +49,8 @@ export default class Text {
             isDate: true
         }]] : [];
 
-        const birthPlace = datum.data.data.birthPlace !== "" ? [[{
-            label: "*" + datum.data.data.birthPlace,
+        const birthPlace = datum.data.data.birthPlaceDescription !== "" ? [[{
+            label: datum.data.data.birthPlaceDescription,
             isPreferred: false,
             isLastName: false,
             isNameRtl: datum.data.data.isNameRtl,

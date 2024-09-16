@@ -361,6 +361,18 @@ class NodeData implements JsonSerializable
         return $this;
     }
 
+    /**
+     * @param string $death
+     *
+     * @return NodeData
+     */
+    public function setDeath(string $death): NodeData
+    {
+        $this->death = $death;
+
+        return $this;
+    }
+
     // added by hr
     /**
      * @param string $birthPlace
@@ -374,14 +386,15 @@ class NodeData implements JsonSerializable
         return $this;
     }
 
+    // added by hr
     /**
-     * @param string $death
+     * @param string $birthPlaceDescription
      *
      * @return NodeData
      */
-    public function setDeath(string $death): NodeData
+    public function setBirthPlaceDescription(string $birthPlaceDescription): NodeData
     {
-        $this->death = $death;
+        $this->birthPlaceDescription = $birthPlaceDescription;
 
         return $this;
     }
@@ -465,8 +478,9 @@ class NodeData implements JsonSerializable
             'thumbnail'             => $this->thumbnail,
             'sex'                   => $this->sex,
             'birth'                 => $this->birth,
-            'birthPlace'            => $this->birthPlace, // added by hr
             'death'                 => $this->death,
+            'birthPlace'            => $this->birthPlace, // added by hr
+            'birthPlaceDescription' => $this->birthPlaceDescription, // added by hr
             'marriageDate'          => $this->marriageDate,
             'marriageDateOfParents' => $this->marriageDateOfParents,
             'timespan'              => $this->timespan,
