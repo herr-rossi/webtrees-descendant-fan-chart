@@ -17,6 +17,8 @@ use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Place; // added by hr
+use Fisharebest\Webtrees\Age; // added by hr
 
 /**
  * Class DateProcessor.
@@ -48,6 +50,14 @@ class DateProcessor
      */
     private Date $deathDate;
 
+    // added by hr
+    /**
+     * The birth place of the individual.
+     *
+     * @var Place
+     */
+    private Place $birthPlace;
+
     /**
      * Constructor.
      *
@@ -58,6 +68,7 @@ class DateProcessor
         $this->individual = $individual;
         $this->birthDate  = $this->individual->getBirthDate();
         $this->deathDate  = $this->individual->getDeathDate();
+        $this->birthPlace = $this->individual->getBirthPlace(); // added by hr
     }
 
     /**
@@ -151,7 +162,7 @@ class DateProcessor
     public function getBirthPlace(): string
     {
         return $this->decodeValue(
-            $this->individual->getBirthPlace()->placeName()
+            $this->birthPlace->placeName()
         );
     }
 
@@ -206,5 +217,33 @@ class DateProcessor
         }
 
         return '';
+    }
+
+    // added by hr
+    /**
+     * Returns the person's age.
+     *
+     * @return int
+     */
+    public function getAge(): int
+    {
+        $this->age = new Age($this->birthDate, $this->deathDate);
+
+        return $this->age->ageYears();
+    }
+
+    // added by hr
+    /**
+     * Returns true if person is deceased young.
+     *
+     * @return bool
+     */
+    public function getIsDeceasedYoung(): bool
+    {
+        if ($this->getAge() > -1 && $this->getAge() <= 18) {
+        return true;
+        }
+
+        return false;
     }
 }

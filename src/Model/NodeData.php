@@ -455,6 +455,62 @@ class NodeData implements JsonSerializable
         return $this;
     }
 
+    // added by hr
+    /**
+     * @param int $age
+     *
+     * @return NodeData
+     */
+    public function setAge(int $age): NodeData
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    // added by hr
+    /**
+     * @param boolean $isDeceasedYoung
+     *
+     * @return NodeData
+     */
+    public function setIsDeceasedYoung(bool $isDeceasedYoung): NodeData
+    {
+        $this->isDeceasedYoung = $isDeceasedYoung;
+
+        return $this;
+    }
+
+    // added by hr
+    /**
+     * @param Individual $individual
+     * @param Individual $individual_1
+     *
+     * @return NodeData
+     */
+    public function setIsDirectLine1(Individual $individual, $individual_1): NodeData
+    {
+    //    $this->isDirectLine1 = false;
+    //    if ($individual->xref() == $individual_1->xref()) {
+    //        $this->isDirectLine1 = true;
+    //    }
+
+        return $this;
+    }
+
+    // added by hr
+    /**
+     * @param boolean $isDirectLine2
+     *
+     * @return NodeData
+     */
+    public function setIsDirectLine2(bool $isDirectLine2): NodeData
+    {
+        $this->isDirectLine2 = $isDirectLine2;
+
+        return $this;
+    }
+
     /**
      * Returns the relevant data as an array.
      *
@@ -484,6 +540,10 @@ class NodeData implements JsonSerializable
             'marriageDate'          => $this->marriageDate,
             'marriageDateOfParents' => $this->marriageDateOfParents,
             'timespan'              => $this->timespan,
+            'age'                   => $this->age, // added by hr
+            'isDeceasedYoung'       => $this->isDeceasedYoung, // added by hr
+            'isDirectLine1'         => $this->isDirectLine1, // added by hr
+            'isDirectLine2'         => $this->isDirectLine2, // added by hr
         ];
     }
 }

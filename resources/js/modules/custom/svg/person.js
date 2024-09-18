@@ -65,6 +65,7 @@ export default class Person
 
             text.createLabels(label, datum);
             this.addColorGroup(person, datum);
+            this.addColorFill(person, datum); // added by hr
 
             const that = this;
 
@@ -240,6 +241,40 @@ export default class Person
         }
     }
 
+    // New function by hr
+    // Fill arc with specific color for specific cases
+    addColorFill(person, datum)
+    {
+        let that = this;
+        let path = person.select("path")
+                
+        if (datum.data.data.isDirectLine1) {
+            path.style("fill", "Red")
+            .style("opacity", 0.7);
+        }
+
+        if (datum.data.data.isDirectLine2) {
+            path.style("fill", "Red")
+            .style("opacity", 0.7);
+        }
+        console.log(datum.data.data.age);
+        if (/*that._configuration.colorDiedYoung == true && */ datum.data.data.isDeceasedYoung) {
+            path.style("fill", "Yellow")
+            .style("opacity", 0.25);   
+           
+        }
+
+//        if (/*that._configuration.colorFemaleLines == true && */ datum.data.data.sex == "F") { //&& !data.data.children) {
+//            path.style("fill", "Magenta")
+//            .style("opacity", 0.25);
+//        }        
+//
+//        if (/*that._configuration.colorMaleLines == true && */ datum.data.data.isMaleLine) { //(data.height + data.depth) > 7 && data.data.children) {
+//            path.style("fill", "Blue")
+//            .style("opacity", 0.25);
+//        }
+    }
+    
     /**
      * Appends the arc element to the person element.
      *

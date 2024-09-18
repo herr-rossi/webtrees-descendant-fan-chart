@@ -181,7 +181,11 @@ class DataFacade
             ->setMarriageDate($dateProcessor->getMarriageDate())
             ->setMarriageDateOfParents($dateProcessor->getMarriageDateOfParents())
             ->setTimespan($dateProcessor->getLifetimeDescription())
-            ->setIndividual($individual);
+            ->setIndividual($individual)
+            ->setAge($dateProcessor->getAge()) // added by hr
+            ->setIsDeceasedYoung($dateProcessor->getIsDeceasedYoung()) // added by hr
+            ->setIsDirectLine1($individual, $individual) // added by hr
+            ->setIsDirectLine2(false); // added by hr
 
         return $treeData;
     }
