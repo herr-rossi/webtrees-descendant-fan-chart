@@ -168,6 +168,8 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                     [
                         'tree'                    => $tree->name(),
                         'xref'                    => $validator->string('xref', ''),
+                        'xrefDL1'                 => $validator->string('xrefDL1', ''), // added by hr
+                        'xrefDL2'                 => $validator->string('xrefDL2', ''), // added by hr
                         'generations'             => $validator->integer('generations', 6),
                         'fanDegree'               => $validator->integer('fanDegree', 360),
                         'fontScale'               => $validator->integer('fontScale', 100),
@@ -184,8 +186,17 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
 
         $individual = Registry::individualFactory()->make($xref, $tree);
         $individual = Auth::checkIndividualAccess($individual, false, true);
-
+       
         $this->configuration = new Configuration($request);
+
+        // added by hr
+        for ($i = 1; $i <= 2; $i++) {
+            $xrefDL[$i] = $this->configuration->getXrefDL($i);
+            $individualsDirectLine[$i] = Registry::individualFactory()->make($xrefDL[$i], $tree);
+            if ($individualsDirectLine[$i] instanceof Individual) {
+                $individualsDirectLine[$i] = Auth::checkIndividualAccess($individualsDirectLine[$i], false, true);
+            }
+        }
 
         $ajaxUpdateUrl = route(
             'module',
@@ -194,6 +205,8 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                 'action' => 'update',
                 'tree'   => $individual->tree()->name(),
                 'xref'   => '',
+                'xrefDL1'  => '', // added by hr
+                'xrefDL2'  => '', // added by hr
             ]
         );
 
@@ -205,6 +218,8 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                 'ajaxUrl'           => $ajaxUpdateUrl,
                 'moduleName'        => $this->name(),
                 'individual'        => $individual,
+                'individualDL1'     => $individualsDirectLine[1], // added by hr
+                'individualDL2'     => $individualsDirectLine[2], // added by hr
                 'tree'              => $tree,
                 'configuration'     => $this->configuration,
                 'chartParams'       => json_encode($this->getChartParameters($individual), JSON_THROW_ON_ERROR),
@@ -302,13 +317,22 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
         $individual = Registry::individualFactory()->make($xref, $tree);
         $individual = Auth::checkIndividualAccess($individual, false, true);
 
+        // added by hr
+        for ($i = 1; $i <= 2; $i++) {
+            $xrefDL[$i] = $this->configuration->getXrefDL($i);
+            $individualsDirectLine[$i] = Registry::individualFactory()->make($xrefDL[$i], $tree);
+            if ($individualsDirectLine[$i] instanceof Individual) {
+                $individualsDirectLine[$i] = Auth::checkIndividualAccess($individualsDirectLine[$i], false, true);
+            }
+        }
+
         $this->dataFacade
             ->setModule($this)
             ->setConfiguration($this->configuration)
             ->setRoute(self::ROUTE_DEFAULT);
 
-        return response([
-            'data' => $this->dataFacade->createTreeStructure($individual),
+            return response([
+            'data' => $this->dataFacade->createTreeStructure($individual, $individualsDirectLine),
         ]);
     }
 

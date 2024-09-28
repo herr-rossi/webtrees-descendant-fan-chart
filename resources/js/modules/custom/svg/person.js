@@ -247,21 +247,22 @@ export default class Person
     {
         let that = this;
         let path = person.select("path")
-                
+
+        //console.log(datum.data.data.age);
+        if (/*that._configuration.colorDiedYoung == true && */ datum.data.data.isDeceasedYoung) {
+            person.classed("isDeceasedYoung", true);
+        }
+
         if (datum.data.data.isDirectLine1) {
-            path.style("fill", "Red")
-            .style("opacity", 0.7);
+            person.classed("DL1", true);
         }
 
         if (datum.data.data.isDirectLine2) {
-            path.style("fill", "Red")
-            .style("opacity", 0.7);
+            person.classed("DL2", true);
         }
-        console.log(datum.data.data.age);
-        if (/*that._configuration.colorDiedYoung == true && */ datum.data.data.isDeceasedYoung) {
-            path.style("fill", "Yellow")
-            .style("opacity", 0.25);   
-           
+
+        if (datum.data.data.isDirectLine1 && datum.data.data.isDirectLine2) {
+            person.classed("DL12", true);
         }
 
 //        if (/*that._configuration.colorFemaleLines == true && */ datum.data.data.sex == "F") { //&& !data.data.children) {

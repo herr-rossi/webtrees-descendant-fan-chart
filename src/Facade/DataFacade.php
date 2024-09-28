@@ -47,6 +47,14 @@ class DataFacade
      */
     private Configuration $configuration;
 
+    // added by hr
+    /**
+     * Array of individuals of direct line.
+     *
+     * @var Individual[]
+     */
+    private array $individualsDirectLine = [];
+
     /**
      * @param ModuleCustomInterface $module
      *
@@ -88,8 +96,9 @@ class DataFacade
      *
      * @return Node|null
      */
-    public function createTreeStructure(Individual $individual): ?Node
+    public function createTreeStructure(Individual $individual, ?array $individualsDirectLine): ?Node
     {
+        $this->individualsDirectLine = $individualsDirectLine;
         return $this->buildTreeStructure($individual);
     }
 
@@ -121,9 +130,16 @@ class DataFacade
         
                 // Recursively call the method for the children of the individual
                 $childNode = $this->buildTreeStructure($child, $generation + 1);
-                
+
                 // Add child nodes
                 if ($childNode instanceof Node) {
+
+                    for ($i = 1; $i <= 2; $i++) {
+                        if ($childNode->getData()->getIsDirectLine($i) == true) {   
+                            $node->getData()->updateIsDirectLine($i, true);
+                        }
+                    }
+
                     $node->addChildren($childNode);
                 }
             }
@@ -184,8 +200,8 @@ class DataFacade
             ->setIndividual($individual)
             ->setAge($dateProcessor->getAge()) // added by hr
             ->setIsDeceasedYoung($dateProcessor->getIsDeceasedYoung()) // added by hr
-            ->setIsDirectLine1($individual, $individual) // added by hr
-            ->setIsDirectLine2(false); // added by hr
+            ->setIsDirectLine($individual, $this->individualsDirectLine, 1) // added by hr
+            ->setIsDirectLine($individual, $this->individualsDirectLine, 2); // added by hr
 
         return $treeData;
     }
@@ -204,6 +220,8 @@ class DataFacade
             'module'      => $this->module->name(),
             'action'      => 'update',
             'xref'        => $individual->xref(),
+            'xrefDL1'     => ($this->individualsDirectLine[1] instanceof Individual) ? $this->individualsDirectLine[1]->xref() : '', // added by hr
+            'xrefDL2'     => ($this->individualsDirectLine[2] instanceof Individual) ? $this->individualsDirectLine[2]->xref() : '', // added by hr
             'tree'        => $individual->tree()->name(),
             'generations' => $this->configuration->getGenerations(),
         ]);

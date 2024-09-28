@@ -211,4 +211,17 @@ class Configuration
 
         return $result;
     }
+
+    // added by hr
+    /**
+     * Returns the xref of the individual of direct line.
+     * @param int $directLineNumber
+     * 
+     * @return string[]
+     */
+    public function getXrefDL($directLineNumber): string
+    {      
+        return Validator::queryParams($this->request)
+            ->isXref()->string('xrefDL' . $directLineNumber, '');
+    }
 }

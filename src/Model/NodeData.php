@@ -165,6 +165,14 @@ class NodeData implements JsonSerializable
      */
     protected ?Individual $individual = null;
 
+    // addad by hr
+    /**
+     * Array indicating if a person belongs to a certain direct line of the individual.
+     *
+     * @var bool[]
+     */
+    protected array $isDirectLine = [];
+
     /**
      * @return int
      */
@@ -484,29 +492,45 @@ class NodeData implements JsonSerializable
     // added by hr
     /**
      * @param Individual $individual
-     * @param Individual $individual_1
+     * @param Individual[] $individualsDirectLine
+     * @param int $directLineNumber
      *
      * @return NodeData
      */
-    public function setIsDirectLine1(Individual $individual, $individual_1): NodeData
+    public function setIsDirectLine(Individual $individual, array $individualsDirectLine, int $directLineNumber): NodeData
     {
-    //    $this->isDirectLine1 = false;
-    //    if ($individual->xref() == $individual_1->xref()) {
-    //        $this->isDirectLine1 = true;
-    //    }
+        $this->isDirectLine[$directLineNumber] = false;
+
+        if ($individualsDirectLine[$directLineNumber] instanceof Individual) {
+            if ($individual->xref() == $individualsDirectLine[$directLineNumber]->xref()) {
+                $this->isDirectLine[$directLineNumber] = true;
+            }
+        }
 
         return $this;
     }
 
     // added by hr
     /**
-     * @param boolean $isDirectLine2
-     *
+     * @param int $directLineNumber
+     * 
+     * @return bool
+     */
+    public function getIsDirectLine(int $directLineNumber): bool
+    {
+        return $this->isDirectLine[$directLineNumber];
+    }
+
+    // added by hr
+    /**
+     * @param int $directLineNumber
+     * @param bool $update
+     * 
      * @return NodeData
      */
-    public function setIsDirectLine2(bool $isDirectLine2): NodeData
+    public function updateIsDirectLine(int $directLineNumber, bool $update): NodeData
     {
-        $this->isDirectLine2 = $isDirectLine2;
+        $this->isDirectLine[$directLineNumber] = $update;
 
         return $this;
     }
@@ -542,8 +566,8 @@ class NodeData implements JsonSerializable
             'timespan'              => $this->timespan,
             'age'                   => $this->age, // added by hr
             'isDeceasedYoung'       => $this->isDeceasedYoung, // added by hr
-            'isDirectLine1'         => $this->isDirectLine1, // added by hr
-            'isDirectLine2'         => $this->isDirectLine2, // added by hr
+            'isDirectLine1'         => $this->isDirectLine[1], // added by hr
+            'isDirectLine2'         => $this->isDirectLine[2], // added by hr
         ];
     }
 }

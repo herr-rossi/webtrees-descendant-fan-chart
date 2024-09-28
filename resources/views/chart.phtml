@@ -120,6 +120,42 @@ hr */ ?>
                 </div>
             </div>
 hr */ ?>
+
+            <!-- added by hr -->
+            <div class="row">
+                <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL1">
+                    <?= I18N::translate('Highlight direct line 1 to:') ?>
+                </label>
+                <div class="col-sm-9 wt-page-options-value">
+                    <?=
+                        view('components/select-individual', [
+                            'id'         => 'xrefDL1',
+                            'name'       => 'xrefDL1',
+                            'individual' => $individualDL1,
+                            'tree'       => $tree,
+                            'required'   => false,
+                        ])
+                    ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL2">
+                    <?= I18N::translate('Highlight direct line 2 to:') ?>
+                </label>
+                <div class="col-sm-9 wt-page-options-value">
+                    <?=
+                        view('components/select-individual', [
+                            'id'         => 'xrefDL2',
+                            'name'       => 'xrefDL2',
+                            'individual' => $individualDL2,
+                            'tree'       => $tree,
+                            'required'   => false,
+                        ])
+                    ?>
+                </div>
+            </div>
+
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="innerArcs">
                     <?= I18N::translate('Number of inner levels') ?>
@@ -222,6 +258,8 @@ function drawChart(fanChart, dataUrl)
     // Create URL
     let url = new URL(dataUrl);
     url.searchParams.set("xref", document.getElementById("xref").value);
+    url.searchParams.set("xrefDL1", document.getElementById("xrefDL1").value);
+    url.searchParams.set("xrefDL2", document.getElementById("xrefDL2").value);
     url.searchParams.set("generations", fanChart.configuration.generations);
 
     // Fetch data
@@ -285,6 +323,8 @@ storage.register("showColorGradients");
 storage.register("showParentMarriageDates");
 storage.register("innerArcs");
 storage.register("fontScale");
+//storage.register("xrefDL1"); // not working
+//storage.register("xrefDL2"); // not working
 
 // Handle option toggle button
 toggleMoreOptions(storage);
