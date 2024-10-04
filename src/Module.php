@@ -173,7 +173,8 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                         'generations'             => $validator->integer('generations', 6),
                         'fanDegree'               => $validator->integer('fanDegree', 360),
                         'fontScale'               => $validator->integer('fontScale', 100),
-                        'hideEmptySegments'       => $validator->boolean('hideEmptySegments', false),
+                        'highlightDeceasedYoung'  => $validator->boolean('highlightDeceasedYoung', false),
+                        'descendantsOptions'      => $validator->string('descendantsOptions', 'all'),
                         'showColorGradients'      => $validator->boolean('showColorGradients', false),
                         'showParentMarriageDates' => $validator->boolean('showParentMarriageDates', false),
                         'innerArcs'               => $validator->integer('innerArcs', 3),
@@ -201,12 +202,13 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
         $ajaxUpdateUrl = route(
             'module',
             [
-                'module' => $this->name(),
-                'action' => 'update',
-                'tree'   => $individual->tree()->name(),
-                'xref'   => '',
-                'xrefDL1'  => '', // added by hr
-                'xrefDL2'  => '', // added by hr
+                'module'  => $this->name(),
+                'action'  => 'update',
+                'tree'    => $individual->tree()->name(),
+                'xref'    => '',
+                'xrefDL1' => '', // added by hr
+                'xrefDL2' => '', // added by hr
+                'descendantsOptions' => '', // added by hr
             ]
         );
 

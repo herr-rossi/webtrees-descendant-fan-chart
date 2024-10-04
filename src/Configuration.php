@@ -83,6 +83,20 @@ class Configuration
     private const FONT_SCALE_DEFAULT = 100;
 
     /**
+     * The possible selectable options for showing descendants.
+     *
+     * @return array
+     */
+    private array $descendantsOptions = [];
+
+    /**
+     * The default option for showing descendants.
+     *
+     * @return string
+     */
+    private string $defaultDescendantsOption = '';
+
+    /**
      * The current request instance.
      *
      * @var ServerRequestInterface
@@ -97,6 +111,17 @@ class Configuration
     public function __construct(ServerRequestInterface $request)
     {
         $this->request = $request;
+
+        // The possible selectable options for showing descendants.
+        $this->descendantsOptions = [
+            'all'                     => I18N::translate('All'),
+            'onlyMaleDescendants'     => I18N::translate('Only male descendants'),
+            'onlyFemaleDescendants'   => I18N::translate('Only female descendants'),
+            'onlyMaleDescendantsPlus' => I18N::translate('Only male descendants or same family name'),
+        ];
+
+        // The default option for showing descendants.
+        $this->defaultDescendantsOption = 'all';
     }
 
     /**
@@ -152,14 +177,36 @@ class Configuration
     }
 
     /**
-     * Returns whether to hide empty segments or not.
+     * Returns the selected option for highlighting young deceased persons.
      *
      * @return bool
      */
-    public function getHideEmptySegments(): bool
+    public function getHighlightDeceasedYoung(): bool
     {
         return Validator::queryParams($this->request)
-            ->boolean('hideEmptySegments', false);
+            ->boolean('highlightDeceasedYoung', false);
+    }
+
+    /**
+     * Returns the possible selectable options for showing descendants.
+     *
+     * @return array
+     */
+    public function getDescendantsOptions(): array
+    {
+        return $this->descendantsOptions;
+    }
+
+    /**
+     * Returns the selected option for showing descendants.
+     *
+     * @return string
+     */
+    public function getDescendantsOptionSelected(): string
+    {
+        return Validator::queryParams($this->request)
+            ->isInArrayKeys($this->descendantsOptions)
+            ->string('descendantsOptions', $this->defaultDescendantsOption);
     }
 
     /**

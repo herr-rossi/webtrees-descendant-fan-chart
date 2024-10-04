@@ -3,7 +3,9 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
- */
+ * 
+ * This file was updated by herr--rossi (hr). 
+*/
 
 import * as d3 from "./lib/d3";
 import Configuration from "./custom/configuration";
@@ -46,17 +48,21 @@ export class FanChart
 
         // Set up configuration
         this._configuration = new Configuration(
-            options.labels,
+            options
+            /*.labels,
             options.generations,
             options.fanDegree,
             options.fontScale,
             options.hideEmptySegments,
+            options.highlightDeceasedYoung,
+        //    options.showOnlyMaleDescendants,
+        //    options.showOnlyFemaleDescendants,
             options.showColorGradients,
             options.showParentMarriageDates,
             options.showImages,
             options.showSilhouettes,
             options.rtl,
-            options.innerArcs
+            options.innerArcs */
         );
 
         this._cssFiles = options.cssFiles;

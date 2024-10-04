@@ -23,6 +23,8 @@ use HerrRossi\Webtrees\FanChart\Configuration;
  * @var string        $title
  * @var string        $moduleName
  * @var Individual    $individual
+ * @var Individual    $individualDL1
+ * @var Individual    $individualDL2
  * @var Tree          $tree
  * @var array         $chartParams
  * @var string        $javascript
@@ -85,6 +87,7 @@ hr */ ?>
         </div>
 
         <div class="collapse" id="showMoreOptions">
+
 <?php /* hr            
             <div class="row">
                 <div class="col-form-label col-sm-3 wt-page-options-label">
@@ -124,7 +127,7 @@ hr */ ?>
             <!-- added by hr -->
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL1">
-                    <?= I18N::translate('Highlight direct line 1 to:') ?>
+                    <?= I18N::translate('Highlight direct line to person 1') ?>
                 </label>
                 <div class="col-sm-9 wt-page-options-value">
                     <?=
@@ -141,7 +144,7 @@ hr */ ?>
 
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL2">
-                    <?= I18N::translate('Highlight direct line 2 to:') ?>
+                    <?= I18N::translate('Highlight direct line to person 2') ?>
                 </label>
                 <div class="col-sm-9 wt-page-options-value">
                     <?=
@@ -156,6 +159,38 @@ hr */ ?>
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-form-label col-sm-3 wt-page-options-label">
+                    <?= I18N::translate('Option') ?>
+                </div>
+                <div class="col-sm-9 wt-page-options-value">
+                    <?=
+                        view('components/checkbox', [
+                            'id'      => 'highlightDeceasedYoung',
+                            'name'    => 'highlightDeceasedYoung',
+                            'label'   => I18N::translate('Highlight persons that died at age < 18 y'),
+                            'checked' => $configuration->getHighlightDeceasedYoung(),
+                        ])
+                    ?>
+                </div>
+            </div>
+
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-3 wt-page-options-label">
+                    <?= I18N::translate('Show descendants') ?>
+                </legend>
+                <div class="col-sm-9 wt-page-options-value">
+                    <?=
+                        view('components/radios-inline', [
+                            'name'     => 'descendantsOptions',
+                            'options'  => $configuration->getDescendantsOptions(),
+                            'selected' => $configuration->getDescendantsOptionSelected(),
+                        ])
+                    ?>
+                </div>
+            </fieldset>
+
+<?php /* hr  
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="innerArcs">
                     <?= I18N::translate('Number of inner levels') ?>
@@ -190,6 +225,8 @@ hr */ ?>
                     </div>
                 </div>
             </div>
+hr */ ?>        
+
         </div>
 
         <div class="row mt-3">
@@ -258,9 +295,10 @@ function drawChart(fanChart, dataUrl)
     // Create URL
     let url = new URL(dataUrl);
     url.searchParams.set("xref", document.getElementById("xref").value);
+    url.searchParams.set("generations", fanChart.configuration.generations);
     url.searchParams.set("xrefDL1", document.getElementById("xrefDL1").value);
     url.searchParams.set("xrefDL2", document.getElementById("xrefDL2").value);
-    url.searchParams.set("generations", fanChart.configuration.generations);
+    url.searchParams.set("descendantsOptions", $('input[name=descendantsOptions]:checked').val());
 
     // Fetch data
     fetch(
@@ -316,13 +354,13 @@ function toggleMoreOptions(storage)
 const storage = new WebtreesFanChart.Storage("webtrees-fan-chart");
 
 // Register all form elements valid for storing data
-storage.register("fanDegree");
+//storage.register("fanDegree");
 storage.register("generations");
-storage.register("hideEmptySegments");
-storage.register("showColorGradients");
-storage.register("showParentMarriageDates");
-storage.register("innerArcs");
-storage.register("fontScale");
+storage.register("highlightDeceasedYoung");
+//storage.register("showColorGradients");
+//storage.register("showParentMarriageDates");
+//storage.register("innerArcs");
+//storage.register("fontScale");
 //storage.register("xrefDL1"); // not working
 //storage.register("xrefDL2"); // not working
 
@@ -348,16 +386,16 @@ const fanChart = new WebtreesFanChart.FanChart(
     {
         labels: data.labels,
         generations: parseInt(storage.read("generations")),
-        fanDegree: 360, // parseInt(storage.read("fanDegree")),
-        defaultColor: data.defaultColor,
-        fontScale: parseInt(storage.read("fontScale")),
-        hideEmptySegments: storage.read("hideEmptySegments"),
-        showColorGradients: storage.read("showColorGradients"),
-        showParentMarriageDates: storage.read("showParentMarriageDates"),
+        //fanDegree: parseInt(storage.read("fanDegree")),
+        //defaultColor: data.defaultColor,
+        //fontScale: parseInt(storage.read("fontScale")),
+        highlightDeceasedYoung: storage.read("highlightDeceasedYoung"),
+        //showColorGradients: storage.read("showColorGradients"),
+        //showParentMarriageDates: storage.read("showParentMarriageDates"),
         showImages: data.showImages,
         showSilhouettes: data.showSilhouettes,
         rtl: data.rtl,
-        innerArcs: parseInt(storage.read("innerArcs")),
+        //innerArcs: parseInt(storage.read("innerArcs")),
         cssFiles: cssFiles
     }
 );

@@ -3,7 +3,9 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
- */
+ *
+ * This file was updated by herr--rossi (hr).
+*/
 
 import * as d3 from "../../lib/d3";
 import Geometry from "./geometry";
@@ -249,7 +251,7 @@ export default class Person
         let path = person.select("path")
 
         //console.log(datum.data.data.age);
-        if (/*that._configuration.colorDiedYoung == true && */ datum.data.data.isDeceasedYoung) {
+        if (that._configuration.highlightDeceasedYoung == true && datum.data.data.isDeceasedYoung) {
             person.classed("isDeceasedYoung", true);
         }
 

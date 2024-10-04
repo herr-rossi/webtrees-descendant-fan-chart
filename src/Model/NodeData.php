@@ -286,6 +286,14 @@ class NodeData implements JsonSerializable
     }
 
     /**
+     * @return string[] $lastNames
+     */
+    public function getLastNames(): array
+    {
+        return $this->lastNames;
+    }
+
+    /**
      * @param string[] $lastNames
      *
      * @return NodeData

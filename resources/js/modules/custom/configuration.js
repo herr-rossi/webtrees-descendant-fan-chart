@@ -3,6 +3,8 @@
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
+ * 
+ * This file was updated by herr--rossi (hr).
  */
 
 /**
@@ -17,31 +19,28 @@ export default class Configuration
     /**
      * Constructor.
      *
-     * @param {String[]} labels
-     * @param {Number}   generations
-     * @param {Number}   fanDegree
-     * @param {Number}   fontScale
-     * @param {Boolean}  hideEmptySegments
-     * @param {Boolean}  showColorGradients
-     * @param {Boolean}  showParentMarriageDates
-     * @param {Boolean}  showImages
-     * @param {Boolean}  showSilhouettes
-     * @param {Boolean}  rtl
-     * @param {Number}   innerArcs
+     * @param {Object} options  A list of options passed from outside
+     *
+     * @param {String[]} options.labels
+     * @param {Number}   options.generations
+     * @param {bool}     options.highlightDeceasedYoung
      */
     constructor(
-        labels,
-        generations = 6,
-        fanDegree = 360,
-        fontScale = 100,
-        hideEmptySegments = false,
-        showColorGradients = false,
-        showParentMarriageDates = false,
-        showImages = false,
-        showSilhouettes = false,
-        rtl = false,
-        innerArcs = 4
+        options
     ) {
+        let labels = options.labels;
+        let generations = options.generations;
+        let fanDegree = 360;
+        let fontScale = 100;
+        let hideEmptySegments = false;
+        let highlightDeceasedYoung = options.highlightDeceasedYoung;
+        let showColorGradients = false;
+        let showParentMarriageDates = false;
+        let showImages = false;
+        let showSilhouettes = false;
+        let rtl = false;
+        let innerArcs = 4;
+
         // Default number of generations to display
         this._generations = generations;
 
@@ -85,6 +84,7 @@ export default class Configuration
         this._fontScale = fontScale;
 
         this._hideEmptySegments  = hideEmptySegments;
+        this._highlightDeceasedYoung  = highlightDeceasedYoung;
         this._showColorGradients = showColorGradients;
         this._showParentMarriageDates = showParentMarriageDates;
         this._showImages = showImages;
@@ -178,6 +178,26 @@ export default class Configuration
     set hideEmptySegments(value)
     {
         this._hideEmptySegments = value;
+    }
+
+    /**
+     * Returns whether to show or hide empty chart segments.
+     *
+     * @return {Boolean}
+     */
+    get highlightDeceasedYoung()
+    {
+        return this._highlightDeceasedYoung;
+    }
+
+    /**
+    * Sets whether to show or hide empty chart segments.
+    *
+    * @param {Boolean} value Either true or false
+    */
+    set highlightDeceasedYoung(value)
+    {
+        this._highlightDeceasedYoung = value;
     }
 
     /**

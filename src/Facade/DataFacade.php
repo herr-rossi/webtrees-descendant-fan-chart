@@ -122,6 +122,19 @@ class DataFacade
             $this->getNodeData($generation, $individual)
         );
 
+        if ($generation != 1) {
+            switch ($this->configuration->getDescendantsOptionSelected()) {
+                case 'onlyMaleDescendants':
+                    if ($individual->sex() === 'F') {
+                        return $node;
+                    }
+                case 'onlyFemaleDescendants':
+                    if ($individual->sex() === 'M') {
+                        return $node;
+                    }
+            }  
+        }
+
         /** @var Families|null $families */
         $families = $individual->spouseFamilies();
 
@@ -137,6 +150,14 @@ class DataFacade
                     for ($i = 1; $i <= 2; $i++) {
                         if ($childNode->getData()->getIsDirectLine($i) == true) {   
                             $node->getData()->updateIsDirectLine($i, true);
+                        }
+                    }
+
+                    if ($this->configuration->getDescendantsOptionSelected()
+                    === 'onlyMaleDescendantsPlus'
+                    && $individual->sex() === 'F') {
+                        if ($childNode->getData()->getLastNames() !== $node->getData()->getLastNames()) {
+                            continue;
                         }
                     }
 
