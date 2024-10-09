@@ -226,6 +226,7 @@ export default class Chart
      */
     update(url)
     {
+        //window.location = url;
         let update = new Update(this._svg, this._configuration, this._hierarchy);
 
         update.update(url, () => this.bindClickEventListener());

@@ -171,13 +171,13 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
                         'xrefDL1'                 => $validator->string('xrefDL1', ''), // added by hr
                         'xrefDL2'                 => $validator->string('xrefDL2', ''), // added by hr
                         'generations'             => $validator->integer('generations', 6),
-                        'fanDegree'               => $validator->integer('fanDegree', 360),
-                        'fontScale'               => $validator->integer('fontScale', 100),
-                        'highlightDeceasedYoung'  => $validator->boolean('highlightDeceasedYoung', false),
-                        'descendantsOptions'      => $validator->string('descendantsOptions', 'all'),
-                        'showColorGradients'      => $validator->boolean('showColorGradients', false),
-                        'showParentMarriageDates' => $validator->boolean('showParentMarriageDates', false),
-                        'innerArcs'               => $validator->integer('innerArcs', 3),
+                    //    'fanDegree'               => $validator->integer('fanDegree', 360),
+                    //    'fontScale'               => $validator->integer('fontScale', 100),
+                        'highlightDeceasedYoung'  => $validator->boolean('highlightDeceasedYoung', false), // added by hr
+                        'descendantsOptions'      => $validator->string('descendantsOptions', 'all'), // added by hr
+                    //    'showColorGradients'      => $validator->boolean('showColorGradients', false),
+                    //    'showParentMarriageDates' => $validator->boolean('showParentMarriageDates', false),
+                    //    'innerArcs'               => $validator->integer('innerArcs', 3),
                     ]
                 )
             );

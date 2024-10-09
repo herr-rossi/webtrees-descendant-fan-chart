@@ -52,7 +52,10 @@ export default class Update
 
         d3.json(
             url
-        ).then((data) => {
+        ).then(data => fanChart.draw(data.data));
+            
+    }  
+            /*(data) => {
             // Initialize the new loaded data
             this._hierarchy.init(data.data);
 
@@ -116,6 +119,7 @@ export default class Update
                 .style("opacity", 1);
         });
     }
+*/
 
     /**
      * Function is executed as callback after all transitions are done in update method.

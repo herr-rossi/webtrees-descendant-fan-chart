@@ -128,10 +128,12 @@ class DataFacade
                     if ($individual->sex() === 'F') {
                         return $node;
                     }
+                break;
                 case 'onlyFemaleDescendants':
                     if ($individual->sex() === 'M') {
                         return $node;
-                    }
+                    }    
+                break;
             }  
         }
 
@@ -141,6 +143,18 @@ class DataFacade
         foreach ($families as $family) {
             foreach ($family->children() as $child) { 
         
+                // Check 'onlyMaleDescendantsPlus' conditions. In case not met, the loop is stopped at this node.
+                $childNodeTemp = new Node(
+                    $this->getNodeData($generation, $child)
+                );
+                if ($this->configuration->getDescendantsOptionSelected()
+                === 'onlyMaleDescendantsPlus'
+                && $individual->sex() === 'F') {
+                    if ($childNodeTemp->getData()->getLastNames() !== $node->getData()->getLastNames()) {
+                        continue;
+                    }
+                }
+
                 // Recursively call the method for the children of the individual
                 $childNode = $this->buildTreeStructure($child, $generation + 1);
 
@@ -152,15 +166,6 @@ class DataFacade
                             $node->getData()->updateIsDirectLine($i, true);
                         }
                     }
-
-                    if ($this->configuration->getDescendantsOptionSelected()
-                    === 'onlyMaleDescendantsPlus'
-                    && $individual->sex() === 'F') {
-                        if ($childNode->getData()->getLastNames() !== $node->getData()->getLastNames()) {
-                            continue;
-                        }
-                    }
-
                     $node->addChildren($childNode);
                 }
             }
@@ -238,13 +243,14 @@ class DataFacade
     private function getUpdateRoute(Individual $individual): string
     {
         return route('module', [
-            'module'      => $this->module->name(),
-            'action'      => 'update',
-            'xref'        => $individual->xref(),
-            'xrefDL1'     => ($this->individualsDirectLine[1] instanceof Individual) ? $this->individualsDirectLine[1]->xref() : '', // added by hr
-            'xrefDL2'     => ($this->individualsDirectLine[2] instanceof Individual) ? $this->individualsDirectLine[2]->xref() : '', // added by hr
-            'tree'        => $individual->tree()->name(),
-            'generations' => $this->configuration->getGenerations(),
+            'module'             => $this->module->name(),
+            'action'             => 'update',
+            'xref'               => $individual->xref(),
+            'xrefDL1'            => ($this->individualsDirectLine[1] instanceof Individual) ? $this->individualsDirectLine[1]->xref() : '', // added by hr
+            'xrefDL2'            => ($this->individualsDirectLine[2] instanceof Individual) ? $this->individualsDirectLine[2]->xref() : '', // added by hr
+            'tree'               => $individual->tree()->name(),
+            'generations'        => $this->configuration->getGenerations(),
+            'descendantsOptions' => $this->configuration->getDescendantsOptionSelected(), // added by hr
         ]);
     }
 

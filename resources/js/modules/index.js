@@ -55,8 +55,6 @@ export class FanChart
             options.fontScale,
             options.hideEmptySegments,
             options.highlightDeceasedYoung,
-        //    options.showOnlyMaleDescendants,
-        //    options.showOnlyFemaleDescendants,
             options.showColorGradients,
             options.showParentMarriageDates,
             options.showImages,

@@ -115,9 +115,9 @@ class Configuration
         // The possible selectable options for showing descendants.
         $this->descendantsOptions = [
             'all'                     => I18N::translate('All'),
-            'onlyMaleDescendants'     => I18N::translate('Only male descendants'),
-            'onlyFemaleDescendants'   => I18N::translate('Only female descendants'),
-            'onlyMaleDescendantsPlus' => I18N::translate('Only male descendants or same family name'),
+            'onlyMaleDescendants'     => I18N::translate('Only male descendant lines'),
+            'onlyFemaleDescendants'   => I18N::translate('Only female descendant lines'),
+            'onlyMaleDescendantsPlus' => I18N::translate('Only male descendant lines or same family name'),
         ];
 
         // The default option for showing descendants.
