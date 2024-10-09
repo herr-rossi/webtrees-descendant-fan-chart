@@ -1,119 +1,120 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-01-11 08:34+0100\n"
-"PO-Revision-Date: 2023-01-11 08:34+0100\n"
-"Last-Translator: Rico Sonntag <mail@ricosonntag.de>\n"
+"POT-Creation-Date: 2024-10-09 15:18+0200\n"
+"PO-Revision-Date: 2024-10-09 21:26+0200\n"
+"Last-Translator: herr--rossi\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: src\n"
 "X-Poedit-SearchPath-1: resources/views\n"
 
-#: src/Module.php:116 src/Module.php:220
+#: src/Configuration.php:117
+msgid "All"
+msgstr ""
+
+#: src/Configuration.php:118
+msgid "Only male descendant lines"
+msgstr "Nur männliche Abstammungslinien"
+
+#: src/Configuration.php:119
+msgid "Only female descendant lines"
+msgstr "Nur weibliche Abstammungslinien"
+
+#: src/Configuration.php:120
+msgid "Only male descendant lines or same family name"
+msgstr "Nur männliche Abstammungslinien oder gleicher Familienname"
+
+#: src/Module.php:122 src/Module.php:248
 msgid "Descendant fan chart"
 msgstr "Nachfahren-Fächerdiagramm"
 
-#: src/Module.php:126
+#: src/Module.php:132
 msgid "A fan chart of an individual’s descendants."
 msgstr "Ein Fächerdiagramm der Nachfahren einer Person."
 
-#: src/Module.php:223 src/Traits/ModuleChartTrait.php:38
+#: src/Module.php:245 src/Traits/ModuleChartTrait.php:43
 #, php-format
 msgid "Descendant fan chart of %s"
 msgstr "Nachfahren-Fächerdiagramm von %s"
 
-#: src/Module.php:243
+#: src/Module.php:265
 msgid "Use Ctrl + scroll to zoom in the view"
 msgstr "Verwende Strg+Scrollen zum Zoomen der Ansicht"
 
-#: src/Module.php:244
+#: src/Module.php:266
 msgid "Move the view with two fingers"
 msgstr "Verschieben der Ansicht mit zwei Fingern"
 
-#: src/Traits/IndividualTrait.php:151
+#: src/Processor/DateProcessor.php:142
 #, php-format
-msgid "Born: %s"
-msgstr "Geboren: %s"
+msgid "*%s"
+msgstr ""
 
-#: src/Traits/IndividualTrait.php:155
+#: src/Processor/DateProcessor.php:146
 #, php-format
-msgid "Died: %s"
-msgstr "Gestorben: %s"
+msgid "†%s"
+msgstr ""
 
-#: src/Traits/IndividualTrait.php:159
-msgid "Deceased"
-msgstr "Verstorben"
+#: src/Processor/DateProcessor.php:150
+msgid "†"
+msgstr ""
 
-#: resources/views/chart.phtml:35
+#: resources/views/chart.phtml:45
 msgid "Individual"
 msgstr "Person"
 
-#: resources/views/chart.phtml:52
-msgid "Fan size"
-msgstr "Fächergröße"
-
-#: resources/views/chart.phtml:62
+#: resources/views/chart.phtml:74
 msgid "Generations"
 msgstr "Generationen"
 
-#: resources/views/chart.phtml:80
-msgid "Presentation"
-msgstr "Darstellung"
+#: resources/views/chart.phtml:130
+msgid "Highlight direct line to person 1"
+msgstr "Hervorheben der direkten Linie zu Person 1"
 
-#: resources/views/chart.phtml:87
-msgid "Hide empty segments"
-msgstr "Verberge leere Segmente"
+#: resources/views/chart.phtml:147
+msgid "Highlight direct line to person 2"
+msgstr "Hervorheben der direkten Linie zu Person 2"
 
-#: resources/views/chart.phtml:96
-msgid "Show color gradients"
-msgstr "Zeige Farbverläufe"
-
-#: resources/views/chart.phtml:105
-msgid "Show parent marriage dates"
-msgstr "Zeige die Heiratsdaten der Eltern an"
-
-#: resources/views/chart.phtml:114
-msgid "Number of inner levels"
-msgstr "Anzahl der inneren Ebenen"
-
-#: resources/views/chart.phtml:127
-msgid ""
-"Specifies the number of levels in which the text is written along an arc."
+#: resources/views/chart.phtml:164
+msgid "Option"
 msgstr ""
-"Bestimmt die Anzahl der Ebenen in denen der Text entlang eines Kreisbogens "
-"geschrieben wird."
 
-#: resources/views/chart.phtml:134
-msgid "Font size"
-msgstr "Schriftgröße"
+#: resources/views/chart.phtml:171
+msgid "Highlight persons that died at age < 18 y"
+msgstr "Hervorheben von Personen, die im Alter < 18 J verstorben sind"
 
-#: resources/views/chart.phtml:159
+#: resources/views/chart.phtml:180
+msgid "Show descendants"
+msgstr "Zeige Nachfahren"
+
+#: resources/views/chart.phtml:243
 msgid "Show more options"
 msgstr "Zeige weitere Optionen"
 
-#: resources/views/chart.phtml:160
+#: resources/views/chart.phtml:244
 msgid "Hide more options"
 msgstr "Verstecke weitere Optionen"
 
-#: resources/views/chart.phtml:165
-msgid "view"
+#: resources/views/chart.phtml:249
+msgid "View"
 msgstr "Anzeigen"
 
-#: resources/views/chart.phtml:171
+#: resources/views/chart.phtml:255
 msgid "Re center"
 msgstr "Neu zentrieren"
 
-#: resources/views/chart.phtml:176
+#: resources/views/chart.phtml:260
 msgid "Export as PNG"
 msgstr "Als PNG exportieren"
 
-#: resources/views/chart.phtml:179
+#: resources/views/chart.phtml:263
 msgid "Export as SVG"
 msgstr "Als SVG exportieren"
