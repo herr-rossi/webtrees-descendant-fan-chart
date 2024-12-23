@@ -55,13 +55,13 @@ class Node implements JsonSerializable
     }
 
     /**
-     * @param Node $children
+     * @param Node $child
      *
      * @return Node
      */
-    public function addChildren(Node $children): Node
+    public function addChild(Node $child): Node
     {
-        $this->children[] = $children;
+        $this->children[] = $child;
 
         return $this;
     }

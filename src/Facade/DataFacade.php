@@ -166,7 +166,7 @@ class DataFacade
                             $node->getData()->updateIsDirectLine($i, true);
                         }
                     }
-                    $node->addChildren($childNode);
+                    $node->addChild($childNode);
                 }
             }
         }
