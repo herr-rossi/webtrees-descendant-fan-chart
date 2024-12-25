@@ -165,7 +165,7 @@ class NodeData implements JsonSerializable
      */
     protected ?Individual $individual = null;
 
-    // addad by hr
+    // added by hr
     /**
      * Array indicating if a person belongs to a certain direct line of the individual.
      *
