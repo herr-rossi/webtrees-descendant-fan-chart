@@ -49,9 +49,9 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
     use ModuleCustomTrait;
     use ModuleChartTrait;
 
-    private const ROUTE_DEFAULT = 'webtrees-fan-chart';
+    private const ROUTE_DEFAULT = 'webtrees-descendant-fan-chart';
 
-    private const ROUTE_DEFAULT_URL = '/tree/{tree}/webtrees-fan-chart/{xref}';
+    private const ROUTE_DEFAULT_URL = '/tree/{tree}/webtrees-descendant-fan-chart/{xref}';
 
     /**
      * @var string
