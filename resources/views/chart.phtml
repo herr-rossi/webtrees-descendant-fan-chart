@@ -232,6 +232,11 @@ hr */ ?>
         <div class="row mt-3">
             <div class="col-sm-12 wt-page-options-value text-center">
                 <div class="btn-toolbar justify-content-between">
+                    
+                    <div class="btn-group btn-group-sm">
+                        <input class="btn btn-primary" type="submit" value="<?= I18N::translate('View') ?>">
+                    </div>
+                            
                     <div class="btn-group btn-group-sm">
                         <button id="options"
                                 class="btn btn-primary"
@@ -245,10 +250,7 @@ hr */ ?>
                         </button>
                     </div>
 
-                    <div class="btn-group btn-group-sm">
-                        <input class="btn btn-primary" type="submit" value="<?= I18N::translate('View') ?>">
-                    </div>
-
+                    <?php /* hr
                     <div class="justify-content-around">
                         <div class="btn-group btn-group-sm mr-2">
                             <button class="btn btn-secondary" type="button" id="centerButton">
@@ -264,12 +266,14 @@ hr */ ?>
                             </button>
                         </div>
                     </div>
+                    hr */ ?> 
                 </div>
             </div>
         </div>
     </form>
 
-    <div class="row">
+    <div class="row webtrees-fan-fullscreen-container">
+        <?= view($moduleName . '::modules/components/buttonbar', ['configuration' => $configuration, 'moduleName' => $moduleName]) ?>
         <div id="webtrees-fan-chart-container-<?= $id ?>" class="webtrees-fan-chart-container wt-ajax-load wt-page-content wt-chart wt-fan-chart"></div>
     </div>
 </div>

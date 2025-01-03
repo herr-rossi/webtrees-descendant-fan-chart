@@ -154,11 +154,11 @@ export default class PngExport extends Export
             'A5': [2480, 1748]
         };
 
-        this.cloneSvg(svg.get().node())
+        this.cloneSvg(svg.node())
             .then(newSvg => {
-                this.copyStylesInline(svg.get().node(), newSvg);
+                this.copyStylesInline(svg.node(), newSvg);
 
-                const viewBox = this.calculateViewBox(svg.get().node());
+                const viewBox = this.calculateViewBox(svg.node());
                 const width   = Math.max(paperSize['A3'][0], viewBox[2]);
                 const height  = Math.max(paperSize['A3'][1], viewBox[3]);
 

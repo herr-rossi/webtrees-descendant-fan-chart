@@ -101,7 +101,7 @@ export default class SvgExport extends Export
      */
     svgToImage(svg, cssFiles, containerClassName, fileName)
     {
-        this.cloneSvg(svg.get().node())
+        this.cloneSvg(svg.node())
             .then(newSvg => this.copyStylesInline(cssFiles, newSvg, containerClassName))
             .then(newSvg => this.convertToObjectUrl(newSvg))
             .then(objectUrl => this.triggerDownload(objectUrl, fileName))

@@ -278,7 +278,7 @@ export default class Text {
      * @private
      */
     measureText(text, fontSize, fontWeight = 400) {
-        const fontFamily = this._svg.get().style("font-family");
+        const fontFamily = this._svg.style("font-family");
 
         return measureText(text, fontFamily, fontSize, fontWeight);
     }

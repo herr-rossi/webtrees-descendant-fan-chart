@@ -43,7 +43,7 @@ export default class Update
     {
         let that = this;
 
-        this._svg.get()
+        this._svg
             .selectAll("g.person")
             .classed("hover", false)
             .on("click", null)
@@ -132,7 +132,7 @@ export default class Update
     {
         // Remove arc if segments should be hidden
         if (this._configuration.hideEmptySegments) {
-            this._svg.get()
+            this._svg
                 .selectAll("g.person.remove")
                 .selectAll("g.arc")
                 .remove();
@@ -141,18 +141,18 @@ export default class Update
         // Remove styles so CSS classes may work correct, Uses a small timer as animation seems not
         // to be done already if the point is reached
         let t = d3.timer(() => {
-            this._svg.get()
+            this._svg
                 .selectAll("g.person g.arc path")
                 .attr("style", null);
 
-            this._svg.get()
+            this._svg
                 .selectAll("g.person g.name, g.person g.color")
                 .style("opacity", null);
 
             t.stop();
         }, 10);
 
-        this._svg.get()
+        this._svg
             .selectAll("g.person.new, g.person.update, g.person.remove")
             .classed("new", false)
             .classed("update", false)
@@ -160,7 +160,7 @@ export default class Update
             .selectAll("g.name.old, g.color.old, title.old")
             .remove();
 
-        this._svg.get()
+        this._svg
             .selectAll("g.person.available")
             .classed("available", false);
 

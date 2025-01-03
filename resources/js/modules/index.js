@@ -69,7 +69,18 @@ export class FanChart
         this._chart = new Chart(this._parent, this._configuration);
 
         this.init();
+        //this.draw(options.data);
     }
+
+   /**
+     * Returns the configuration object.
+     *
+     * @return {Configuration}
+     */
+   get configuration()
+   {
+       return this._configuration;
+   }
 
     /**
      * @private
@@ -78,7 +89,7 @@ export class FanChart
     {
         // Bind click event on center button
         d3.select("#centerButton")
-            .on("click", () => this.center());
+            .on("click", () => this._chart.center());
 
         // Bind click event on export as PNG button
         d3.select("#exportPNG")
@@ -87,30 +98,46 @@ export class FanChart
         // Bind click event on export as SVG button
         d3.select("#exportSVG")
             .on("click", () => this.exportSVG());
+
+        this.addEventListeners();
     }
 
     /**
-     * Resets the chart to initial zoom level and position.
-     *
-     * @private
+     * Add event listeners.
      */
-    center()
+    addEventListeners()
     {
-        this._chart
-            .svg.get()
-            .transition()
-            .duration(750)
-            .call(this._chart.svg.zoom.get().transform, d3.zoomIdentity);
+        // Listen for fullscreen change event
+        document.addEventListener(
+            "fullscreenchange",
+            () => {
+                if (document.fullscreenElement) {
+                    // Add attribute to the body element to indicate fullscreen state
+                    document.body.setAttribute("fullscreen", "");
+                } else {
+                    document.body.removeAttribute("fullscreen");
+                }
+
+                this._chart.updateViewBox();
+            }
+        );
+
+        // Listen for orientation change event
+        screen.orientation.addEventListener(
+            "change",
+            () => {
+                this._chart.updateViewBox();
+            });
     }
 
     /**
-     * Returns the configuration object.
+     * Updates the chart.
      *
-     * @return {Configuration}
+     * @param {string} url The update url
      */
-    get configuration()
+    update(url)
     {
-        return this._configuration;
+        this._chart.update(url);
     }
 
     /**
