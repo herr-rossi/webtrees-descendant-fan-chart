@@ -1,5 +1,5 @@
 /**
- * This file is part of the package magicsunday/webtrees-descendants-chart.
+ * This file is part of the package magicsunday/webtrees-fan-chart.
  *
  * For the full copyright and license information, please read the
  * LICENSE file distributed with this source code.
@@ -10,7 +10,7 @@ import * as d3 from "./../../d3";
 /**
  * Constants
  *
- * @type {Number}
+ * @type {number}
  */
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 20.0;
@@ -20,14 +20,14 @@ const MAX_ZOOM = 20.0;
  *
  * @author  Rico Sonntag <mail@ricosonntag.de>
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
- * @link    https://github.com/magicsunday/webtrees-descendants-chart/
+ * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
 export default class Zoom
 {
     /**
      * Constructor.
      *
-     * @param {selection} parent The selected D3 parent element container
+     * @param {Selection} parent The selected D3 parent element container
      */
     constructor(parent)
     {
@@ -100,7 +100,7 @@ export default class Zoom
     /**
      * Returns the internal d3 zoom behavior.
      *
-     * @returns {zoom}
+     * @returns {d3.zoom}
      */
     get()
     {

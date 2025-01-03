@@ -20,10 +20,6 @@ export default class Configuration
      * Constructor.
      *
      * @param {Object} options  A list of options passed from outside
-     *
-     * @param {String[]} options.labels
-     * @param {Number}   options.generations
-     * @param {bool}     options.highlightDeceasedYoung
      */
     constructor(
         options
@@ -56,7 +52,7 @@ export default class Configuration
         this.padDistance = this.padAngle * this.padRadius;
         this.cornerRadius = 0;
 
-        // Number of circles, large enough to print text along arc path
+        // Number of circles, large enough to print text along an arc path
         this._numberOfInnerCircles = innerArcs;
 
         // Radius of the innermost circle
@@ -103,7 +99,7 @@ export default class Configuration
     /**
      * Returns the number of generations to display.
      *
-     * @return {Number}
+     * @return {number}
      */
     get generations()
     {
@@ -113,7 +109,7 @@ export default class Configuration
     /**
      * Sets the number of generations to display.
      *
-     * @param {Number} value The number of generations to display
+     * @param {number} value The number of generations to display
      */
     set generations(value)
     {
@@ -123,7 +119,7 @@ export default class Configuration
     /**
      * Returns the degrees of the fan chart.
      *
-     * @return {Number}
+     * @return {number}
      */
     get fanDegree()
     {
@@ -133,7 +129,7 @@ export default class Configuration
     /**
      * Sets the degrees of the fan chart.
      *
-     * @param {Number} value The degrees of the fan chart
+     * @param {number} value The degrees of the fan chart
      */
     set fanDegree(value)
     {
@@ -143,7 +139,7 @@ export default class Configuration
     /**
      * Returns the font scaling.
      *
-     * @return {Number}
+     * @return {number}
      */
     get fontScale()
     {
@@ -153,7 +149,7 @@ export default class Configuration
     /**
      * Sets the font scaling.
      *
-     * @param {Number} value The font scaling
+     * @param {number} value The font scaling
      */
     set fontScale(value)
     {
@@ -163,7 +159,7 @@ export default class Configuration
     /**
      * Returns whether to show or hide empty chart segments.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get hideEmptySegments()
     {
@@ -173,7 +169,7 @@ export default class Configuration
     /**
      * Sets whether to show or hide empty chart segments.
      *
-     * @param {Boolean} value Either true or false
+     * @param {boolean} value Either true or false
      */
     set hideEmptySegments(value)
     {
@@ -183,7 +179,7 @@ export default class Configuration
     /**
      * Returns whether to show or hide empty chart segments.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get highlightDeceasedYoung()
     {
@@ -193,7 +189,7 @@ export default class Configuration
     /**
     * Sets whether to show or hide empty chart segments.
     *
-    * @param {Boolean} value Either true or false
+    * @param {boolean} value Either true or false
     */
     set highlightDeceasedYoung(value)
     {
@@ -203,7 +199,7 @@ export default class Configuration
     /**
      * Returns whether to show or hide a color gradient above each arc or display male/female colors instead.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get showColorGradients()
     {
@@ -213,7 +209,7 @@ export default class Configuration
     /**
      * Sets whether to show or hide a color gradient above each arc or display male/female colors instead.
      *
-     * @param {Boolean} value Either true or false
+     * @param {boolean} value Either true or false
      */
     set showColorGradients(value)
     {
@@ -223,7 +219,7 @@ export default class Configuration
     /**
      * Returns whether to show or hide the parent marriage dates.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get showParentMarriageDates()
     {
@@ -233,7 +229,7 @@ export default class Configuration
     /**
      * Sets whether to show or hide the parent marriage dates.
      *
-     * @param {Boolean} value Either true or false
+     * @param {boolean} value Either true or false
      */
     set showParentMarriageDates(value)
     {
@@ -243,7 +239,7 @@ export default class Configuration
     /**
      * Returns TRUE if individual image should be shown otherwise FALSE.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get showImages()
     {
@@ -253,7 +249,7 @@ export default class Configuration
     /**
      * Returns TRUE if silhouette placeholder image should be shown otherwise FALSE.
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
     get showSilhouettes()
     {
@@ -263,7 +259,7 @@ export default class Configuration
     /**
      * Returns the number of inner arcs to display.
      *
-     * @return {Number}
+     * @return {number}
      */
     get numberOfInnerCircles()
     {
@@ -273,7 +269,7 @@ export default class Configuration
     /**
      * Sets the number of inner arcs to display.
      *
-     * @param {Number} value The number of inner arcs
+     * @param {number} value The number of inner arcs
      */
     set numberOfInnerCircles(value)
     {
@@ -283,7 +279,7 @@ export default class Configuration
     /**
      * Returns the font size in pixel.
      *
-     * @return {Number}
+     * @return {number}
      */
     get fontSize()
     {

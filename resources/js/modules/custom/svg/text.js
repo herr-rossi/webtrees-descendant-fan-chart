@@ -271,9 +271,9 @@ export default class Text {
      *
      * @param {String} text
      * @param {String} fontSize
-     * @param {Number} fontWeight
+     * @param {number} fontWeight
      *
-     * @returns {Number}
+     * @returns {number}
      *
      * @private
      */
@@ -288,7 +288,7 @@ export default class Text {
      *
      * @param {selection} parent The parent (<text> or <textPath>) element containing the <tspan> child elements
      *
-     * @returns {Number}
+     * @returns {number}
      */
     getTextLength(parent) {
         const fontSize = parent.style("font-size");
@@ -321,7 +321,7 @@ export default class Text {
      * Creates a new <path> definition and append it to the global definition list.
      *
      * @param {String} parentId The parent element id
-     * @param {Number} index    Index position of an element in parent container. Required to create a unique path id.
+     * @param {number} index    Index position of an element in parent container. Required to create a unique path id.
      * @param {Object} data     The D3 data object
      *
      * @return {String} The id of the newly created path element
@@ -364,9 +364,9 @@ export default class Text {
     /**
      * Check for the 360-degree chart if the current arc labels should be flipped for easier reading.
      *
-     * @param {Number} depth The depth of the element inside the chart
-     * @param {Number} x0    The left edge (x0) of the rectangle
-     * @param {Number} x1    The right edge (x1) of the rectangle
+     * @param {number} depth The depth of the element inside the chart
+     * @param {number} x0    The left edge (x0) of the rectangle
+     * @param {number} x1    The right edge (x1) of the rectangle
      *
      * @return {Boolean}
      */
@@ -389,10 +389,10 @@ export default class Text {
      *   => (0 = inner radius, 100 = outer radius)
      *
      * @param {Boolean} positionFlipped TRUE if the labels should be flipped for easier reading
-     * @param {Number}  index           The index position of element in parent container. Required to create a unique path id.
-     * @param {Number}  numberOfLines   Overall number of lines of the label
+     * @param {number}  index           The index position of element in parent container. Required to create a unique path id.
+     * @param {number}  numberOfLines   Overall number of lines of the label
      *
-     * @return {Number}
+     * @return {number}
      */
     getTextOffset(positionFlipped, index, numberOfLines) {
 
@@ -406,10 +406,10 @@ export default class Text {
      * and the individual width of radial labels, the available width differs.
      *
      * @param {Object} data          The D3 data object
-     * @param {Number} index         The index position of element in parent container.
-     * @param {Number} numberOfLines Overall number of lines of the label
+     * @param {number} index         The index position of element in parent container.
+     * @param {number} numberOfLines Overall number of lines of the label
      *
-     * @returns {Number} Calculated available width or radius
+     * @returns {number} Calculated available width or radius
      *
      * @private
      */
@@ -440,9 +440,9 @@ export default class Text {
 
      * @param {selection} parent        The D3 parent group object
      * @param {Object}    data          The The D3 data object
-     * @param {Number}    numberOfLines Overall number of lines of the label
+     * @param {number}    numberOfLines Overall number of lines of the label
      *
-     * @returns {Number}
+     * @returns {number}
      */
     getIndexOfSizingLine(parent, data, numberOfLines, labelFontSize) {
         let indexOfSizingLine = 0;
@@ -490,7 +490,7 @@ export default class Text {
      *
      * @param {selection} parent        The D3 parent group object
      * @param {Object}    datum         The The D3 data object
-     * @param {Number}    labelFontSize The font size of the label
+     * @param {number}    labelFontSize The font size of the label
      *
      * @public
      */

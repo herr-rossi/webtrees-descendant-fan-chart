@@ -34,7 +34,7 @@ export default class Update
     /**
      * Update the chart with data loaded from AJAX.
      *
-     * @param {String}   url      The update URL
+     * @param {string}   url      The update URL
      * @param {Function} callback The callback method to execute after the update
      *
      * @public

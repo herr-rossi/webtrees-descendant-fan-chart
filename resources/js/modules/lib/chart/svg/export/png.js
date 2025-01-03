@@ -1,5 +1,5 @@
 /**
- * This file is part of the package magicsunday/webtrees-descendants-chart.
+ * This file is part of the package magicsunday/webtrees-fan-chart.
  *
  * For the full copyright and license information, please read the
  * LICENSE file distributed with this source code.
@@ -12,7 +12,7 @@ import Export from "../export";
  *
  * @author  Rico Sonntag <mail@ricosonntag.de>
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
- * @link    https://github.com/magicsunday/webtrees-descendants-chart/
+ * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
 export default class PngExport extends Export
 {
@@ -48,7 +48,7 @@ export default class PngExport extends Export
      *
      * @param {SVGGraphicsElement} svg The SVG element
      *
-     * @returns {Number[]}
+     * @returns {number[]}
      */
     calculateViewBox(svg)
     {
@@ -67,8 +67,8 @@ export default class PngExport extends Export
 
     /**
      *
-     * @param {Number} width
-     * @param {Number} height
+     * @param {number} width
+     * @param {number} height
      *
      * @returns {HTMLCanvasElement}
      */
@@ -85,8 +85,8 @@ export default class PngExport extends Export
      * Converts the given SVG into a PNG image. Resolves to the PNG data URL.
      *
      * @param {SVGGraphicsElement} svg    The SVG element
-     * @param {Number}             width  The width of the image
-     * @param {Number}             height The height of the image
+     * @param {number}             width  The width of the image
+     * @param {number}             height The height of the image
      *
      * @returns {Promise<String>}
      */
@@ -140,7 +140,7 @@ export default class PngExport extends Export
      * Saves the given SVG as PNG image file.
      *
      * @param {Svg}    svg      The source SVG object
-     * @param {String} fileName The file name
+     * @param {string} fileName The file name
      */
     svgToImage(svg, fileName)
     {

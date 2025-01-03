@@ -1,5 +1,5 @@
 /**
- * This file is part of the package magicsunday/webtrees-descendants-chart.
+ * This file is part of the package magicsunday/webtrees-fan-chart.
  *
  * For the full copyright and license information, please read the
  * LICENSE file distributed with this source code.
@@ -10,14 +10,14 @@
  *
  * @author  Rico Sonntag <mail@ricosonntag.de>
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
- * @link    https://github.com/magicsunday/webtrees-descendants-chart/
+ * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
 export class Storage
 {
     /**
      * Constructor.
      *
-     * @param {String} name The name of the storage
+     * @param {string} name The name of the storage
      */
     constructor(name)
     {
@@ -28,7 +28,7 @@ export class Storage
     /**
      * Register an HTML element.
      *
-     * @param {String} name The id or name of an HTML element
+     * @param {string} name The ID or name of an HTML element
      */
     register(name)
     {
@@ -74,9 +74,9 @@ export class Storage
     /**
      * Returns the stored value belonging to the HTML element id.
      *
-     * @param {String} name The id or name of an HTML element
+     * @param {string} name The id or name of an HTML element
      *
-     * @returns {null|String|Boolean|Number}
+     * @returns {null|string|boolean|number}
      */
     read(name)
     {
@@ -90,8 +90,8 @@ export class Storage
     /**
      * Stores a value to the given HTML element id.
      *
-     * @param {String}                name  The id or name of an HTML element
-     * @param {String|Boolean|Number} value The value to store
+     * @param {string}                name  The id or name of an HTML element
+     * @param {string|boolean|number} value The value to store
      */
     write(name, value)
     {

@@ -29,16 +29,16 @@ export class FanChart
      * @param {Object} options  A list of options passed from outside to the application
      *
      * @param {String[]} options.labels
-     * @param {Number}   options.generations
-     * @param {Number}   options.fanDegree
-     * @param {Number}   options.fontScale
+     * @param {number}   options.generations
+     * @param {number}   options.fanDegree
+     * @param {number}   options.fontScale
      * @param {Boolean}  options.hideEmptySegments
      * @param {Boolean}  options.showColorGradients
      * @param {Boolean}  options.showParentMarriageDates
      * @param {Boolean}  options.showImages
      * @param {Boolean}  options.showSilhouettes
      * @param {Boolean}  options.rtl
-     * @param {Number}   options.innerArcs
+     * @param {number}   options.innerArcs
      * @param {String[]} options.cssFiles
      */
     constructor(selector, options)
