@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-10-09 15:18+0200\n"
-"PO-Revision-Date: 2024-10-09 21:26+0200\n"
+"POT-Creation-Date: 2025-01-04 22:20+0100\n"
+"PO-Revision-Date: 2025-01-04 22:28+0100\n"
 "Last-Translator: herr--rossi\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,40 +16,40 @@ msgstr ""
 "X-Poedit-SearchPath-0: src\n"
 "X-Poedit-SearchPath-1: resources/views\n"
 
-#: src/Configuration.php:117
+#: src/Configuration.php:125
 msgid "All"
 msgstr ""
 
-#: src/Configuration.php:118
+#: src/Configuration.php:126
 msgid "Only male descendant lines"
 msgstr "Nur männliche Abstammungslinien"
 
-#: src/Configuration.php:119
+#: src/Configuration.php:127
 msgid "Only female descendant lines"
 msgstr "Nur weibliche Abstammungslinien"
 
-#: src/Configuration.php:120
+#: src/Configuration.php:128
 msgid "Only male descendant lines or same family name"
 msgstr "Nur männliche Abstammungslinien oder gleicher Familienname"
 
-#: src/Module.php:122 src/Module.php:248
+#: src/Module.php:132 src/Module.php:258
 msgid "Descendant fan chart"
 msgstr "Nachfahren-Fächerdiagramm"
 
-#: src/Module.php:132
+#: src/Module.php:142
 msgid "A fan chart of an individual’s descendants."
 msgstr "Ein Fächerdiagramm der Nachfahren einer Person."
 
-#: src/Module.php:245 src/Traits/ModuleChartTrait.php:43
+#: src/Module.php:255 src/Traits/ModuleChartTrait.php:43
 #, php-format
 msgid "Descendant fan chart of %s"
 msgstr "Nachfahren-Fächerdiagramm von %s"
 
-#: src/Module.php:265
+#: src/Module.php:275
 msgid "Use Ctrl + scroll to zoom in the view"
 msgstr "Verwende Strg+Scrollen zum Zoomen der Ansicht"
 
-#: src/Module.php:266
+#: src/Module.php:276
 msgid "Move the view with two fingers"
 msgstr "Verschieben der Ansicht mit zwei Fingern"
 
@@ -67,54 +67,98 @@ msgstr ""
 msgid "†"
 msgstr ""
 
+#: src/Traits/ModuleConfigTrait.php:77
+#, php-format
+msgid "The preferences for the module “%s” have been updated."
+msgstr ""
+
 #: resources/views/chart.phtml:45
 msgid "Individual"
 msgstr "Person"
 
-#: resources/views/chart.phtml:74
-msgid "Generations"
-msgstr "Generationen"
-
-#: resources/views/chart.phtml:130
+#: resources/views/chart.phtml:131
 msgid "Highlight direct line to person 1"
 msgstr "Hervorheben der direkten Linie zu Person 1"
 
-#: resources/views/chart.phtml:147
+#: resources/views/chart.phtml:148
 msgid "Highlight direct line to person 2"
 msgstr "Hervorheben der direkten Linie zu Person 2"
 
-#: resources/views/chart.phtml:164
+#: resources/views/chart.phtml:165
 msgid "Option"
 msgstr ""
 
-#: resources/views/chart.phtml:171
+#: resources/views/chart.phtml:172
 msgid "Highlight persons that died at age < 18 y"
 msgstr "Hervorheben von Personen, die im Alter < 18 J verstorben sind"
 
-#: resources/views/chart.phtml:180
+#: resources/views/chart.phtml:181
 msgid "Show descendants"
 msgstr "Zeige Nachfahren"
 
-#: resources/views/chart.phtml:243
-msgid "Show more options"
-msgstr "Zeige weitere Optionen"
-
-#: resources/views/chart.phtml:244
-msgid "Hide more options"
-msgstr "Verstecke weitere Optionen"
-
-#: resources/views/chart.phtml:249
+#: resources/views/chart.phtml:238
 msgid "View"
 msgstr "Anzeigen"
 
-#: resources/views/chart.phtml:255
+#: resources/views/chart.phtml:249
+msgid "Show more options"
+msgstr "Zeige weitere Optionen"
+
+#: resources/views/chart.phtml:250
+msgid "Hide more options"
+msgstr "Verstecke weitere Optionen"
+
+#: resources/views/modules/components/buttonbar/center-button.phtml:18
 msgid "Re center"
 msgstr "Neu zentrieren"
 
-#: resources/views/chart.phtml:260
+#: resources/views/modules/components/buttonbar/fullscreen-button.phtml:18
+msgid "Switch between full screen mode and normal view"
+msgstr ""
+
+#: resources/views/modules/components/buttonbar/help-button.phtml:17
+msgid "Show help"
+msgstr ""
+
+#: resources/views/modules/components/buttonbar/png-export-button.phtml:18
 msgid "Export as PNG"
 msgstr "Als PNG exportieren"
 
-#: resources/views/chart.phtml:263
+#: resources/views/modules/components/buttonbar/svg-export-button.phtml:18
 msgid "Export as SVG"
 msgstr "Als SVG exportieren"
+
+#: resources/views/modules/fan-chart/config.phtml:27
+msgid "Control panel"
+msgstr ""
+
+#: resources/views/modules/fan-chart/config.phtml:27
+msgid "Modules"
+msgstr ""
+
+#: resources/views/modules/fan-chart/config.phtml:40
+msgid "General"
+msgstr "Allgemein"
+
+#: resources/views/modules/fan-chart/config.phtml:46
+msgid "Hide the SVG export button"
+msgstr "Die Schaltfläche für den SVG-Export ausblenden"
+
+#: resources/views/modules/fan-chart/config.phtml:56
+msgid "Hide the PNG export button"
+msgstr "Die Schaltfläche für den PNG-Export ausblenden"
+
+#: resources/views/modules/fan-chart/config.phtml:69
+msgid "Save"
+msgstr "Speichern"
+
+#: resources/views/modules/fan-chart/config.phtml:74
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: resources/views/modules/fan-chart/form/generations.phtml:22
+msgid "Generations"
+msgstr "Generationen"
+
+#~ msgid "save"
+#~ msgstr "Speichern"

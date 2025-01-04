@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * This file is part of the package magicsunday/webtrees-fan-chart.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file distributed with this source code.
+ *
+ * This file was updated by herr--rossi (hr).
+ */
+
+declare(strict_types=1);
+
+use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
+use Fisharebest\Webtrees\Http\RequestHandlers\ModulesAllPage;
+use Fisharebest\Webtrees\I18N;
+use HerrRossi\Webtrees\DescendantFanChart\Configuration;
+
+/**
+ * @var Configuration $configuration
+ * @var string        $moduleName
+ * @var string        $title
+ * @var string        $description
+ */
+?>
+
+<?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => I18N::translate('Control panel'), route(ModulesAllPage::class) => I18N::translate('Modules'), $title]]) ?>
+
+<h1><?= $title ?></h1>
+<p><?= $description ?></p>
+
+<form method="post">
+    <div class="mb-3">
+        <?= view($moduleName . '::modules/fan-chart/form/generations', ['configuration' => $configuration]) ?>
+    </div>
+
+    <div class="mb-3">
+        <div class="row">
+            <div class="col-form-label col-sm-3 wt-page-options-label">
+                <?= I18N::translate('General') ?>
+            </div>
+            <div class="col-sm-9 wt-page-options-value">
+                <?=
+                view($moduleName . '::modules/components/checkbox', [
+                    'name'      => 'hideSvgExport',
+                    'label'     => I18N::translate('Hide the SVG export button'),
+                    'checked'   => $configuration->getHideSvgExport(),
+                    'unchecked' => '0',
+                ])
+                ?>
+
+                <div class="mt-3">
+                    <?=
+                    view($moduleName . '::modules/components/checkbox', [
+                        'name'      => 'hidePngExport',
+                        'label'     => I18N::translate('Hide the PNG export button'),
+                        'checked'   => $configuration->getHidePngExport(),
+                        'unchecked' => '0',
+                    ])
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-9">
+            <button type="submit" class="btn btn-primary">
+                <?= I18N::translate('Save') ?>
+            </button>
+
+            <a href="<?= route(ControlPanel::class) ?>" class="btn btn-secondary">
+                <?= view('icons/cancel') ?>
+                <?= I18N::translate('Cancel') ?>
+            </a>
+        </div>
+    </div>
+
+    <?= csrf_field() ?>
+</form>

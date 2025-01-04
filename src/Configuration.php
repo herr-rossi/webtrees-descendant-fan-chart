@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace HerrRossi\Webtrees\DescendantFanChart;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -45,7 +47,7 @@ class Configuration
      *
      * @var int
      */
-    private const MAX_GENERATIONS = 20;
+    private const MAX_GENERATIONS = 30;
 
     /**
      * The default number of inner levels.
@@ -83,6 +85,11 @@ class Configuration
     private const FONT_SCALE_DEFAULT = 100;
 
     /**
+     * The calling module.
+     */
+    private AbstractModule $module;
+
+    /**
      * The possible selectable options for showing descendants.
      *
      * @return array
@@ -108,9 +115,10 @@ class Configuration
      *
      * @param ServerRequestInterface $request
      */
-    public function __construct(ServerRequestInterface $request)
+    public function __construct(ServerRequestInterface $request, AbstractModule $module)
     {
         $this->request = $request;
+        $this->module  = $module;
 
         // The possible selectable options for showing descendants.
         $this->descendantsOptions = [
@@ -131,9 +139,21 @@ class Configuration
      */
     public function getGenerations(): int
     {
-        return Validator::queryParams($this->request)
+        if ($this->request->getMethod() === RequestMethodInterface::METHOD_POST) {
+            $validator = Validator::parsedBody($this->request);
+        } else {
+            $validator = Validator::queryParams($this->request);
+        }
+
+        return $validator
             ->isBetween(self::MIN_GENERATIONS, self::MAX_GENERATIONS)
-            ->integer('generations', self::DEFAULT_GENERATIONS);
+            ->integer(
+                'generations',
+                (int) $this->module->getPreference(
+                    'default_generations',
+                    (string) self::DEFAULT_GENERATIONS
+                )
+            );
     }
 
     /**
@@ -270,5 +290,51 @@ class Configuration
     {      
         return Validator::queryParams($this->request)
             ->isXref()->string('xrefDL' . $directLineNumber, '');
+    }
+
+    /**
+     * Returns whether to hide the SVG export button or not.
+     *
+     * @return bool
+     */
+    public function getHideSvgExport(): bool
+    {
+        if ($this->request->getMethod() === RequestMethodInterface::METHOD_POST) {
+            $validator = Validator::parsedBody($this->request);
+        } else {
+            $validator = Validator::queryParams($this->request);
+        }
+
+        return $validator
+            ->boolean(
+                'hideSvgExport',
+                (bool) $this->module->getPreference(
+                    'default_hideSvgExport',
+                    '0'
+                )
+            );
+    }
+
+    /**
+     * Returns whether to hide the PNG export button or not.
+     *
+     * @return bool
+     */
+    public function getHidePngExport(): bool
+    {
+        if ($this->request->getMethod() === RequestMethodInterface::METHOD_POST) {
+            $validator = Validator::parsedBody($this->request);
+        } else {
+            $validator = Validator::queryParams($this->request);
+        }
+
+        return $validator
+            ->boolean(
+                'hidePngExport',
+                (bool) $this->module->getPreference(
+                    'default_hidePngExport',
+                    '0'
+                )
+            );
     }
 }

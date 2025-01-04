@@ -24,6 +24,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
+use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleThemeInterface;
 use Fisharebest\Webtrees\Registry;
@@ -32,6 +33,7 @@ use Fisharebest\Webtrees\View;
 use JsonException;
 use HerrRossi\Webtrees\DescendantFanChart\Facade\DataFacade;
 use HerrRossi\Webtrees\DescendantFanChart\Traits\ModuleChartTrait;
+use HerrRossi\Webtrees\DescendantFanChart\Traits\ModuleConfigTrait;
 use HerrRossi\Webtrees\DescendantFanChart\Traits\ModuleCustomTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,10 +46,11 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
  * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
-class Module extends AbstractModule implements ModuleCustomInterface, ModuleChartInterface, RequestHandlerInterface
+class Module extends AbstractModule implements ModuleCustomInterface, ModuleChartInterface, RequestHandlerInterface, ModuleConfigInterface
 {
     use ModuleCustomTrait;
     use ModuleChartTrait;
+    use ModuleConfigTrait;
 
     private const ROUTE_DEFAULT = 'webtrees-descendant-fan-chart';
 
@@ -165,7 +168,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
         $user = Validator::attributes($request)->user();
 
         // Convert POST requests into GET requests for pretty URLs.
-        // This also updates the name above the form, which wont get updated if only a POST request is used
+        // This also updates the name above the form, which won't get updated if only a POST request is used
         if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
             $validator = Validator::parsedBody($request);
 
@@ -195,7 +198,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
         $individual = Registry::individualFactory()->make($xref, $tree);
         $individual = Auth::checkIndividualAccess($individual, false, true);
        
-        $this->configuration = new Configuration($request);
+        $this->configuration = new Configuration($request, $this);
 
         // added by hr
         for ($i = 1; $i <= 2; $i++) {
@@ -315,7 +318,7 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     public function getUpdateAction(ServerRequestInterface $request): ResponseInterface
     {
-        $this->configuration = new Configuration($request);
+        $this->configuration = new Configuration($request, $this);
 
         $tree = Validator::attributes($request)->tree();
         $user = Validator::attributes($request)->user();

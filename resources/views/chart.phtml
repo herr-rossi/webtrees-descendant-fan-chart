@@ -15,7 +15,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
-use HerrRossi\Webtrees\FanChart\Configuration;
+use HerrRossi\Webtrees\DescendantFanChart\Configuration;
 
 /**
  * @var array         $id               The unique chart ID
@@ -68,7 +68,8 @@ use HerrRossi\Webtrees\FanChart\Configuration;
             </div>
         </div>
 hr */ ?>
-
+        <?= view($moduleName . '::modules/fan-chart/form/generations', ['configuration' => $configuration]) ?>
+        <?php /* hr        
         <div class="row">
             <label class="col-sm-3 col-form-label wt-page-options-label" for="generations">
                 <?= I18N::translate('Generations') ?>
@@ -85,7 +86,7 @@ hr */ ?>
                 ?>
             </div>
         </div>
-
+        hr */ ?>
         <div class="collapse" id="showMoreOptions">
 
 <?php /* hr            
