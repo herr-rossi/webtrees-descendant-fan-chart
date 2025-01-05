@@ -59,17 +59,17 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
     /**
      * @var string
      */
-    private const GITHUB_REPO = 'magicsunday/webtrees-fan-chart';
+    private const GITHUB_REPO = 'herr-rossi/webtrees-descendant-fan-chart';
 
     /**
      * @var string
      */
-    public const CUSTOM_AUTHOR = 'Rico Sonntag';
+    public const CUSTOM_AUTHOR = 'Herr Rossi (credits: Rico Sonntag)';
 
     /**
      * @var string
      */
-    public const CUSTOM_VERSION = '2.7.0';
+    public const CUSTOM_VERSION = '1.0-dev';
 
     /**
      * @var string
@@ -355,7 +355,10 @@ class Module extends AbstractModule implements ModuleCustomInterface, ModuleChar
      */
     private function getStylesheets(): array
     {
-        return [$this->assetUrl('css/fan-chart.css'), $this->assetUrl('css/svg.css')];
+        return [
+            $this->assetUrl('css/fan-chart.css'),
+            $this->assetUrl('css/svg.css'),
+        ];
     }
 
     /**
