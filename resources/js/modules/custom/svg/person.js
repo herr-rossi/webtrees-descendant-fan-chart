@@ -206,8 +206,8 @@ export default class Person
         let arcGenerator = d3.arc()
             .startAngle(this._geometry.startAngle(datum.depth, datum.x0))
             .endAngle(this._geometry.endAngle(datum.depth, datum.x1))
-            .innerRadius(this._geometry.outerRadius(datum.depth) - this._configuration.colorArcWidth)
-            .outerRadius(this._geometry.outerRadius(datum.depth) + 1);
+            .innerRadius(this._geometry.outerRadius(datum.depth) - this._configuration.colorArcWidth - 1.5)
+            .outerRadius(this._geometry.outerRadius(datum.depth) - 0.5);
         // .innerRadius((data) => this._geometry.outerRadius(data.depth) - this._configuration.colorArcWidth - 2)
         // .outerRadius((data) => this._geometry.outerRadius(data.depth) - 1);
 

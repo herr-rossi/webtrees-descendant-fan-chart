@@ -69,7 +69,7 @@ export default class Configuration
         }
 
         // Width of the colored arc above each single person arc
-        this.colorArcWidth = 5;
+        this.colorArcWidth = 7;
 
         // Left/Right padding of the text (used with truncation)
         this.textPadding = 8;
