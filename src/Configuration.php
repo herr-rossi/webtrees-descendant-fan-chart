@@ -114,6 +114,7 @@ class Configuration
      * Configuration constructor.
      *
      * @param ServerRequestInterface $request
+     * @param AbstractModule         $module
      */
     public function __construct(ServerRequestInterface $request, AbstractModule $module)
     {

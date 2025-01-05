@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * This file is based on the package magicsunday/webtrees-fan-chart.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file distributed with this source code.
+ *
+ * This file was created by herr--rossi (hr).
+ */
+
+declare(strict_types=1);
+
+use Fisharebest\Webtrees\I18N;
+use HerrRossi\Webtrees\DescendantFanChart\Configuration;
+
+/**
+ * @var Configuration $configuration
+ */
+?>
+
+<div class="row">
+    <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL1">
+        <?= I18N::translate('Highlight direct line to person 1') ?>
+    </label>
+    <div class="col-sm-9 wt-page-options-value">
+        <?=
+            view('components/select-individual', [
+                'name' => 'xrefDL1',
+                'individual' => $individualDL1,
+                'tree' => $tree,
+                'required' => false,
+            ])
+            ?>
+    </div>
+</div>
+
+<div class="row">
+    <label class="col-sm-3 col-form-label wt-page-options-label" for="xrefDL2">
+        <?= I18N::translate('Highlight direct line to person 2') ?>
+    </label>
+    <div class="col-sm-9 wt-page-options-value">
+        <?=
+            view('components/select-individual', [
+                'name' => 'xrefDL2',
+                'individual' => $individualDL2,
+                'tree' => $tree,
+                'required' => false,
+            ])
+            ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-form-label col-sm-3 wt-page-options-label">
+        <?= I18N::translate('Option') ?>
+    </div>
+    <div class="col-sm-9 wt-page-options-value">
+        <?=
+            view('components/checkbox', [
+                'id' => 'highlightDeceasedYoung',
+                'name' => 'highlightDeceasedYoung',
+                'label' => I18N::translate('Highlight persons that died at age < 18 y'),
+                'checked' => $configuration->getHighlightDeceasedYoung(),
+            ])
+            ?>
+    </div>
+</div>
+
+<fieldset class="row mb-3">
+    <legend class="col-form-label col-sm-3 wt-page-options-label">
+        <?= I18N::translate('Show descendants') ?>
+    </legend>
+    <div class="col-sm-9 wt-page-options-value">
+        <?=
+            view('components/radios-inline', [
+                'name' => 'descendantsOptions',
+                'options' => $configuration->getDescendantsOptions(),
+                'selected' => $configuration->getDescendantsOptionSelected(),
+            ])
+            ?>
+    </div>
+</fieldset>
