@@ -6,7 +6,7 @@
  */
 
 import PngExport from "./export/png";
-import SvgExport from "./export/svg";
+import SvgExport from "./export/svg_old";
 
 /**
  * The file export factory.
