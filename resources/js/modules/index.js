@@ -25,21 +25,15 @@ export class FanChart
     /**
      * Constructor.
      *
-     * @param {String} selector The CSS selector of the HTML element used to assign the chart too
+     * @param {string} selector The CSS selector of the HTML element used to assign the chart too
      * @param {Object} options  A list of options passed from outside to the application
      *
-     * @param {String[]} options.labels
+     * @param {string[]} options.labels
      * @param {number}   options.generations
-     * @param {number}   options.fanDegree
-     * @param {number}   options.fontScale
-     * @param {Boolean}  options.hideEmptySegments
-     * @param {Boolean}  options.showColorGradients
-     * @param {Boolean}  options.showParentMarriageDates
-     * @param {Boolean}  options.showImages
-     * @param {Boolean}  options.showSilhouettes
-     * @param {Boolean}  options.rtl
-     * @param {number}   options.innerArcs
-     * @param {String[]} options.cssFiles
+     * @param {boolean}  options.showImages
+     * @param {boolean}  options.showSilhouettes
+     * @param {boolean}  options.rtl
+     * @param {string[]} options.cssFiles
      */
     constructor(selector, options)
     {
@@ -47,21 +41,7 @@ export class FanChart
         this._parent   = d3.select(this._selector);
 
         // Set up configuration
-        this._configuration = new Configuration(
-            options
-            /*.labels,
-            options.generations,
-            options.fanDegree,
-            options.fontScale,
-            options.hideEmptySegments,
-            options.highlightDeceasedYoung,
-            options.showColorGradients,
-            options.showParentMarriageDates,
-            options.showImages,
-            options.showSilhouettes,
-            options.rtl,
-            options.innerArcs */
-        );
+        this._configuration = new Configuration(options);
 
         this._cssFiles = options.cssFiles;
 

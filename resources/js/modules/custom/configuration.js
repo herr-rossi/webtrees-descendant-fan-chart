@@ -21,9 +21,8 @@ export default class Configuration
      *
      * @param {Object} options  A list of options passed from outside
      */
-    constructor(
-        options
-    ) {
+    constructor(options)
+    {
         let labels = options.labels;
         let generations = options.generations;
         let fanDegree = 360;

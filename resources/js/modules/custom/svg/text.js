@@ -8,36 +8,39 @@
  */
 
 import * as d3 from "../../lib/d3";
-import Geometry, { MATH_DEG2RAD, MATH_RAD2DEG } from "./geometry";
+import Geometry, {MATH_DEG2RAD, MATH_RAD2DEG} from "./geometry";
 import measureText from "../../lib/chart/text/measure"
 
 /**
- * The class handles all the text and text path elements.
+ * The class handles all the text and path elements.
  *
  * @author  Rico Sonntag <mail@ricosonntag.de>
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License v3.0
  * @link    https://github.com/magicsunday/webtrees-fan-chart/
  */
-export default class Text {
+export default class Text
+{
     /**
      * Constructor.
      *
      * @param {Svg}           svg
      * @param {Configuration} configuration The application configuration
      */
-    constructor(svg, configuration) {
-        this._svg = svg;
+    constructor(svg, configuration)
+    {
+        this._svg           = svg;
         this._configuration = configuration;
-        this._geometry = new Geometry(this._configuration);
+        this._geometry      = new Geometry(this._configuration);
     }
 
     /**
      * Creates all the labels and all dependent elements for a single person.
      *
-     * @param {selection} parent The parent element to which the elements are to be attached
+     * @param {Selection} parent The parent element to which the elements are to be attached
      * @param {Object}    datum  The D3 data object
      */
-    createLabels(parent, datum) {
+    createLabels(parent, datum)
+    {
         // Define label content
         const nameGroups = this.createNamesData(datum);
 
@@ -158,7 +161,8 @@ export default class Text {
      *
      * @private
      */
-    createNamesData(datum) {
+    createNamesData(datum)
+    {
         /** @var {LabelElementData[][]} names */
         let names = {};
         /** @var {LabelElementData[]} firstnames */
@@ -242,12 +246,13 @@ export default class Text {
      * parent element. The "tspan" element containing the preferred name gets an
      * additional underline style to highlight this one.
      *
-     * @param {selection}                       parent The parent element to which the <tspan> elements are to be attached
+     * @param {Selection}                       parent The parent element to which the <tspan> elements are to be attached
      * @param {function(*): LabelElementData[]} data
      *
      * @private
      */
-    addLabelElements(parent, data) {
+    addLabelElements(parent, data)
+    {
         parent.selectAll("tspan")
             .data(data)
             .enter()
@@ -269,15 +274,16 @@ export default class Text {
     /**
      * Measures the given text and return its width depending on the used font (including size and weight).
      *
-     * @param {String} text
-     * @param {String} fontSize
+     * @param {string} text
+     * @param {string} fontSize
      * @param {number} fontWeight
      *
      * @returns {number}
      *
      * @private
      */
-    measureText(text, fontSize, fontWeight = 400) {
+    measureText(text, fontSize, fontWeight = 400)
+    {
         const fontFamily = this._svg.style("font-family");
 
         return measureText(text, fontFamily, fontSize, fontWeight);
@@ -286,11 +292,12 @@ export default class Text {
     /**
      * Returns a float representing the computed length of all <tspan> elements within the element.
      *
-     * @param {selection} parent The parent (<text> or <textPath>) element containing the <tspan> child elements
+     * @param {Selection} parent The parent (<text> or <textPath>) element containing the <tspan> child elements
      *
      * @returns {number}
      */
-    getTextLength(parent) {
+    getTextLength(parent)
+    {
         const fontSize = parent.style("font-size");
         const fontWeight = parent.style("font-weight");
         let text = parent.text();
@@ -309,9 +316,10 @@ export default class Text {
      *
      * @param {Object} data The D3 data object
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
-    isLabelAlongArc(data) {
+    isLabelAlongArc(data)
+    {
         // Note: The center element does not belong to the transverse labels!
         // hr: oirignal code: return ((data.depth > 0) && (data.depth <= this._configuration.numberOfInnerCircles));
         return ((data.depth > 0) && (this._geometry.arcLength(data, 50) > this._configuration.outerArcHeight));
@@ -320,13 +328,14 @@ export default class Text {
     /**
      * Creates a new <path> definition and append it to the global definition list.
      *
-     * @param {String} parentId The parent element id
+     * @param {string} parentId The parent element id
      * @param {number} index    Index position of an element in parent container. Required to create a unique path id.
      * @param {Object} data     The D3 data object
      *
-     * @return {String} The id of the newly created path element
+     * @return {string} The id of the newly created path element
      */
-    createPathDefinition(parentId, index, data, numberOfLines) {
+    createPathDefinition(parentId, index, data, numberOfLines)
+    {
         let pathId = "path-" + parentId + "-" + index;
 
         // If definition already exists, return the existing path ID
@@ -335,9 +344,9 @@ export default class Text {
         }
 
         let positionFlipped = this.isPositionFlipped(data.depth, data.x0, data.x1);
-        let startAngle = this._geometry.startAngle(data.depth, data.x0);
-        let endAngle = this._geometry.endAngle(data.depth, data.x1);
-        let relativeRadius = this._geometry.relativeRadius(data.depth, this.getTextOffset(positionFlipped, index, numberOfLines));
+        let startAngle      = this._geometry.startAngle(data.depth, data.x0);
+        let endAngle        = this._geometry.endAngle(data.depth, data.x1);
+        let relativeRadius  = this._geometry.relativeRadius(data.depth, this.getTextOffset(positionFlipped, index, numberOfLines));
 
         // Create an arc generator for path segments
         let arcGenerator = d3.arc()
@@ -368,16 +377,17 @@ export default class Text {
      * @param {number} x0    The left edge (x0) of the rectangle
      * @param {number} x1    The right edge (x1) of the rectangle
      *
-     * @return {Boolean}
+     * @return {boolean}
      */
-    isPositionFlipped(depth, x0, x1) {
+    isPositionFlipped(depth, x0, x1)
+    {
         if ((this._configuration.fanDegree !== 360) || (depth == 0)) {
             return false;
         }
 
         const startAngle = this._geometry.startAngle(depth, x0);
-        const endAngle = this._geometry.endAngle(depth, x1);
-        const midAngle = (startAngle + endAngle) / 2;
+        const endAngle   = this._geometry.endAngle(depth, x1);
+        const midAngle   = (startAngle + endAngle) / 2;
 
         // Flip names for better readability depending on position in chart
         return ((midAngle >= (90 * MATH_DEG2RAD)) && (midAngle <= (180 * MATH_DEG2RAD)))
@@ -388,7 +398,7 @@ export default class Text {
      * Get the relative position offsets in percent for different text lines (firstName, lastName, dates, place).
      *   => (0 = inner radius, 100 = outer radius)
      *
-     * @param {Boolean} positionFlipped TRUE if the labels should be flipped for easier reading
+     * @param {boolean} positionFlipped TRUE if the labels should be flipped for easier reading
      * @param {number}  index           The index position of element in parent container. Required to create a unique path id.
      * @param {number}  numberOfLines   Overall number of lines of the label
      *
@@ -438,7 +448,7 @@ export default class Text {
     /**
      * Calculate the index of the font sizing line
 
-     * @param {selection} parent        The D3 parent group object
+     * @param {Selection} parent        The D3 parent group object
      * @param {Object}    data          The The D3 data object
      * @param {number}    numberOfLines Overall number of lines of the label
      *
@@ -488,7 +498,7 @@ export default class Text {
      * Transform the D3 <text> elements in the group. Rotate each <text> element depending on its offset,
      * so that they are equally positioned inside the arc.
      *
-     * @param {selection} parent        The D3 parent group object
+     * @param {Selection} parent        The D3 parent group object
      * @param {Object}    datum         The The D3 data object
      * @param {number}    labelFontSize The font size of the label
      *
