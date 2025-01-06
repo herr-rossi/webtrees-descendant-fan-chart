@@ -10,7 +10,7 @@ export default [
         output: [
             {
                 name: "WebtreesFanChart",
-                file: "resources/js/fan-chart-" + pkg.version + ".js",
+                file: "resources/js/fan-chart" + /*pkg.version + */".js",
                 format: "umd"
             }
         ],
@@ -18,7 +18,7 @@ export default [
             resolve(),
             license({
                 banner: `
-This file is part of the package magicsunday/<%= pkg.name %>.
+This file is part of the package herr-rossi/<%= pkg.name %>.
 
 For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
@@ -33,7 +33,7 @@ Version: <%= pkg.version %>`
         output: [
             {
                 name: "WebtreesFanChart",
-                file: "resources/js/fan-chart-" + pkg.version + ".min.js",
+                file: "resources/js/fan-chart" + /*pkg.version + */".min.js",
                 format: "umd"
             }
         ],
@@ -49,7 +49,7 @@ Version: <%= pkg.version %>`
             }),
             license({
                 banner: `
-This file is part of the package magicsunday/<%= pkg.name %>.
+This file is part of the package herr-rossi/<%= pkg.name %>.
 
 For the full copyright and license information, please read the
 LICENSE file that was distributed with this source code.
@@ -59,7 +59,7 @@ Version: <%= pkg.version %>`
             })
         ]
     },
-
+    /*
     // fan-chart-storage.js
     {
         input: "resources/js/modules/lib/storage.js",
@@ -95,4 +95,5 @@ Version: <%= pkg.version %>`
             })
         ]
     }
+    */
 ];

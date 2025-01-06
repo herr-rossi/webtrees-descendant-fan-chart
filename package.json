@@ -1,7 +1,7 @@
 {
-    "name": "webtrees-fan-chart",
-    "version": "3.0.1-dev",
-    "description": "This modules provides an SVG ancestor fan chart for the [webtrees](https://www.webtrees.net) genealogy application.",
+    "name": "webtrees-descendant-fan-chart",
+    "version": "1.0-dev",
+    "description": "This modules provides an SVG descendant fan chart for the [webtrees](https://www.webtrees.net) genealogy application.",
     "keywords": [
         "webtrees",
         "module",

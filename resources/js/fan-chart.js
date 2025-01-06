@@ -1,11 +1,11 @@
 /**
- * This file is part of the package magicsunday/webtrees-fan-chart.
+ * This file is part of the package herr-rossi/webtrees-descendant-fan-chart.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  *
- * Generated: 2025-01-06 00:43:46
- * Version: 3.0.1-dev
+ * Generated: 2025-01-06 01:18:35
+ * Version: 1.0-dev
  */
 
 (function (global, factory) {
